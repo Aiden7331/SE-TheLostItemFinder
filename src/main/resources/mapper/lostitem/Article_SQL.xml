@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="Article"> 
+	<insert id ="insertOne" parameterType="HashMap">
+		INSERT INTO TB_ARTICLE
+		(TYPE_ITEM,
+		TYPE_ARTICLE,
+		DATE_LOST,
+		DATE_UPLOAD,
+		HOLD,
+		PLACE,
+		TITLE,
+		CONTENTS,
+		IMAGE)
+		VALUES
+		(#{article.TYPE_ITEM},
+		"test",
+		"test",
+		#{article.DATE_UPLOAD},
+		"1",
+		#{article.PLACE},
+		#{article.TITLE},
+		#{article.CONTENTS},
+		"test"
+		)
+	</insert>
+	<select id ="selectAll" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
+		SELECT
+		SEQ, 
+		TYPE_ITEM,
+		TYPE_ARTICLE,
+		DATE_LOST,
+		DATE_UPLOAD,
+		HOLD,
+		PLACE,
+		TITLE,
+		CONTENTS,
+		IMAGE
+		FROM TB_ARTICLE
+	</select>
+	<select id ="selectOne" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
+		SELECT
+		SEQ, 
+		TYPE_ITEM,
+		TYPE_ARTICLE,
+		DATE_LOST,
+		DATE_UPLOAD,
+		HOLD,
+		PLACE,
+		TITLE,
+		CONTENTS,
+		IMAGE
+		FROM TB_ARTICLE
+		WHERE SEQ=#{seq}
+	</select>
+	
+</mapper>

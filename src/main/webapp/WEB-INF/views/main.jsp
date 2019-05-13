@@ -49,8 +49,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#">들어온 분실물 </a></li>
-              <li><a href="#">내 분실물 알리기</a></li>
+              <li><a href="board">들어온 분실물 </a></li>
+              <li><a href="upload">내 분실물 알리기</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">추가개발예정 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -65,7 +65,7 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="../navbar-fixed-top/">로그인 <span class="sr-only">(current)</span></a></li>
+              <li><a href="login">로그인 <span class="sr-only">(current)</span></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

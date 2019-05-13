@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="Reply"> 
+	<insert id ="insertOne" parameterType="HashMap">
+		INSERT INTO TB_REPLY
+		(SEQ,
+		DATE,
+		CONTENTS,
+		ARTICLE_SEQ)
+		VALUES
+		(#{reply.SEQ},
+		#{reply.DATE},
+		#{reply.CONTENTS},
+		#{reply.ARTICLE_SEQ}
+		)
+	</insert>
+	<select id = "selectSeq" parameterType="HashMap" resultType="int">
+		SELECT SEQ FROM TB_MEMBER
+		WHERE ID = #{ID}
+	</select>
+</mapper>

@@ -12,7 +12,7 @@ public interface ArticleDAO {
 		return true;
 	}*/
 	
-	public List<ArticleDTO> selectList() throws Exception;
+	public List<ArticleDTO> selectList(int page, int delimit) throws Exception;
 	
 	public ArticleDTO selectAArticle(int seq);
 }

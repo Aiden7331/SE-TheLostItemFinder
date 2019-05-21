@@ -12,7 +12,8 @@
 		PLACE,
 		TITLE,
 		CONTENTS,
-		IMAGE)
+		IMAGE,
+		MEMBER_SEQ)
 		VALUES
 		(#{article.TYPE_ITEM},
 		"test",
@@ -22,22 +23,33 @@
 		#{article.PLACE},
 		#{article.TITLE},
 		#{article.CONTENTS},
-		"test"
+		"test",
+		(SELECT SEQ FROM TB_MEMBER
+		WHERE NICKNAME=#{article.NICKNAME})
 		)
 	</insert>
-	<select id ="selectAll" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
+	<update id = "updateHits" parameterType="HashMap">
+		UPDATE TB_ARTICLE
+		SET HITS=HITS+1
+		WHERE SEQ = #{seq}
+	</update>
+	<select id = "selectAll" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
 		SELECT
-		SEQ, 
-		TYPE_ITEM,
-		TYPE_ARTICLE,
-		DATE_LOST,
-		DATE_UPLOAD,
-		HOLD,
-		PLACE,
-		TITLE,
-		CONTENTS,
-		IMAGE
-		FROM TB_ARTICLE
+		A.SEQ, 
+		A.TYPE_ITEM,
+		A.TYPE_ARTICLE,
+		A.DATE_LOST,
+		A.DATE_UPLOAD,
+		A.HOLD,
+		M.NICKNAME,
+		A.PLACE,
+		A.TITLE,
+		A.CONTENTS,
+		A.IMAGE,
+		A.HITS
+		FROM TB_ARTICLE A
+		INNER JOIN TB_MEMBER M 
+		ON M.SEQ=A.MEMBER_SEQ
 	</select>
 	<select id ="selectOne" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
 		SELECT
@@ -50,7 +62,8 @@
 		PLACE,
 		TITLE,
 		CONTENTS,
-		IMAGE
+		IMAGE,
+		HITS
 		FROM TB_ARTICLE
 		WHERE SEQ=#{seq}
 	</select>

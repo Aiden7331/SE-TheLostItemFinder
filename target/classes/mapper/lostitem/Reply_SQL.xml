@@ -4,19 +4,31 @@
 <mapper namespace="Reply"> 
 	<insert id ="insertOne" parameterType="HashMap">
 		INSERT INTO TB_REPLY
-		(SEQ,
+		(
+		MEMBER_SEQ,
 		DATE,
 		CONTENTS,
-		ARTICLE_SEQ)
+		ARTICLE_SEQ,
+		REPLY_SEQ)
 		VALUES
-		(#{reply.SEQ},
+		(
+		(SELECT SEQ FROM TB_MEMBER
+		WHERE NICKNAME=#{reply.NICKNAME}),
 		#{reply.DATE},
 		#{reply.CONTENTS},
-		#{reply.ARTICLE_SEQ}
+		#{reply.ARTICLE_SEQ},
+		(SELECT COUNT(*) FROM TB_ARTICLE WHERE ARTICLE_SEQ = #{reply.ARTICLE_SEQ})+1
 		)
 	</insert>
-	<select id = "selectSeq" parameterType="HashMap" resultType="int">
-		SELECT SEQ FROM TB_MEMBER
-		WHERE ID = #{ID}
+	
+	<select id= "selectList" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ReplyDTO">
+		SELECT 
+		R.REPLY_SEQ,
+		R.CONTENTS,
+		R.DATE,
+		M.NICKNAME
+		FROM TB_REPLY R
+		INNER JOIN TB_MEMBER M
+		WHERE #{id}=ARTICLE_SEQ
 	</select>
 </mapper>

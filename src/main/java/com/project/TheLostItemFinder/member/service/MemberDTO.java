@@ -1,7 +1,11 @@
 package com.project.TheLostItemFinder.member.service;
 
 public class MemberDTO {
-	private String id, pw, tel, grade, nickName;
+	private String id;
+	private String pw;
+	private String tel;
+	private String grade;
+	private String nickName;
 	private int adminNum;
 	
 	public String getId() {

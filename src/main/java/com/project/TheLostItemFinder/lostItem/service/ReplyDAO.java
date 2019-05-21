@@ -1,9 +1,10 @@
 package com.project.TheLostItemFinder.lostItem.service;
 
+import java.util.List;
+
 public interface ReplyDAO {
 	boolean insertReply(ReplyDTO dto);
-	Integer seqByID(String id);
 	boolean updateReply();
 	boolean deleteReply();
-	
+	public List<ReplyDTO> selectReply(Integer id);
 }

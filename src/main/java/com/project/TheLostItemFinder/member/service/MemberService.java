@@ -1,11 +1,14 @@
 package com.project.TheLostItemFinder.member.service;
 
-public class MemberService {
+import javax.annotation.Resource;
 
-	public boolean comfirmPW() {
-		//TODO 비밀번호 확인
-		return true;
-	}
+import org.springframework.stereotype.Service;
+
+@Service("memberService")
+public class MemberService {
+	
+	@Resource(name = "memberDAO")
+	MemberDAO dao= new MemberDAO();
 	
 	public boolean checkDouble() {
 		//TODO 중복확인
@@ -17,9 +20,12 @@ public class MemberService {
 		return true;
 	}
 	
-	public boolean login(String id, String pw) {
-		//TODO 로그인
-		return true;
+	public String login(String id, String pw) {
+		if(dao.confirmPW(id, pw)) {
+			return dao.getNickName(id);
+		}else {
+			return null;
+		}
 	}
 	
 	public boolean logout() {

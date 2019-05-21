@@ -4,12 +4,9 @@ import java.util.Calendar;
 
 public class fUtil {
 	public static String date(){
-		String date = "";
-		date += Integer.toString(Calendar.YEAR)+"-";
-		date += Integer.toString(Calendar.MONTH + 1)+"-";
-		date += Integer.toString(Calendar.DATE)+".";
-		date += Integer.toString(Calendar.HOUR)+"h";
-		
+		Calendar cal= Calendar.getInstance();
+		int month = cal.get(Calendar.MONTH)+1;
+		String date = cal.get(Calendar.YEAR)+"-"+month+"-"+cal.get(Calendar.DATE);
 		return date;
 	}
 }

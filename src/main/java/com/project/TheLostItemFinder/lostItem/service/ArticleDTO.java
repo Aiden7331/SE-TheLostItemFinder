@@ -7,12 +7,27 @@ public class ArticleDTO {
 	private String DATE_UPLOAD;
 	private String TITLE;
 	private String IMAGE;
+	private String NICKNAME;
 	private String CONTENTS;
 	private String PLACE;
 	private String HOLD;
+	private int HITS;
 	private int SEQ;
 	
 	
+	
+	public String getNICKNAME() {
+		return NICKNAME;
+	}
+	public void setNICKNAME(String nICKNAME) {
+		NICKNAME = nICKNAME;
+	}
+	public int getHITS() {
+		return HITS;
+	}
+	public void setHITS(int hITS) {
+		HITS = hITS;
+	}
 	public String getTYPE_ARTICLE() {
 		return TYPE_ARTICLE;
 	}

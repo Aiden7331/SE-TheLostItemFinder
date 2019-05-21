@@ -1,9 +1,6 @@
 package com.project.TheLostItemFinder.lostItem.service;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -22,20 +19,25 @@ public class ArticleService {
 	public ArticleDTO getArticle(int seq) {
 		return dao.selectAArticle(seq);
 	}
+	
+	public List<ReplyDTO> getReply(int seq) {
+		return rdao.selectReply(seq);
+	}
+	
+	public List<ArticleDTO> getList(int page, int delimit) throws Exception {
+		return dao.selectList(page, delimit);
+	}
+	
 	public boolean addReply(int seq, String contents, String writer){
 		ReplyDTO dto=new ReplyDTO();
-		Integer number = rdao.seqByID(writer);
-		if(number==null) {
-			return false;
-		}
 		dto.setDATE(fUtil.date());
-		dto.setSEQ(number);
-		dto.setSEQ(seq);
+		dto.setNICKNAME(writer);
+		dto.setARTICLE_SEQ(seq);
 		dto.setCONTENTS(contents);
 		
 		return rdao.insertReply(dto);
 	}
-	public boolean addArticle(String title, String type_item, String contents, String place) {
+	public boolean addArticle(String title, String type_item, String contents, String place, String nickName) {
 		ArticleDTO dto=new ArticleDTO();
 		
 		dto.setDATE_UPLOAD(fUtil.date());
@@ -43,6 +45,7 @@ public class ArticleService {
 		dto.setTYPE_ITEM(type_item);
 		dto.setCONTENTS(contents);
 		dto.setPLACE(place);
+		dto.setNICKNAME(nickName);
 		dao.insertItem(dto);
 		
 		return true;

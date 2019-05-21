@@ -1,6 +1,7 @@
 package com.project.TheLostItemFinder.lostItem.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,7 +19,7 @@ public class ReplyDAOImpl implements ReplyDAO{
 	public boolean insertReply(ReplyDTO dto) {
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("reply", dto);
-		sqlSession.insert(namespace+".selectOne",param);
+		sqlSession.insert(namespace+".insertOne",param);
 		return true;
 	}
 
@@ -32,12 +33,19 @@ public class ReplyDAOImpl implements ReplyDAO{
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public Integer seqByID(String id) {
 		Map<String,Object> param = new HashMap<String,Object>();
 		
 		param.put("id", id);
 		return sqlSession.selectOne(namespace+".selectSeq",param);
+	}*/
+
+	@Override
+	public List<ReplyDTO> selectReply(Integer id) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("id",id);
+		return sqlSession.selectList(namespace+".selectList",param);
 	}
 
 }

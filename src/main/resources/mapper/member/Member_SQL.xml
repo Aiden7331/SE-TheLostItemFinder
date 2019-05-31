@@ -10,4 +10,13 @@
 		SELECT NICKNAME FROM TB_MEMBER
 		WHERE ID=#{id}
 	</select>
+	
+	<select id="selectMember" parameterType="HashMap" resultType="com.project.TheLostItemFinder.member.service.MemberDTO">
+		SELECT 
+		NICKNAME,
+		ID,
+		GRADE
+		FROM TB_MEMBER
+		WHERE ID=#{id}
+	</select>
 </mapper>

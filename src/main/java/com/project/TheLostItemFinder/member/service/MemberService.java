@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 @Service("memberService")
 public class MemberService {
 	
+	String[] GRADE = {"ADMIN","MEMBER"};
+	
 	@Resource(name = "memberDAO")
 	MemberDAO dao= new MemberDAO();
 	
@@ -20,9 +22,9 @@ public class MemberService {
 		return true;
 	}
 	
-	public String login(String id, String pw) {
+	public MemberDTO login(String id, String pw) {
 		if(dao.confirmPW(id, pw)) {
-			return dao.getNickName(id);
+			return dao.getMember(id);
 		}else {
 			return null;
 		}

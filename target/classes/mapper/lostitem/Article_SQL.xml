@@ -50,22 +50,26 @@
 		FROM TB_ARTICLE A
 		INNER JOIN TB_MEMBER M 
 		ON M.SEQ=A.MEMBER_SEQ
+		ORDER BY A.SEQ DESC LIMIT 10
 	</select>
 	<select id ="selectOne" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
 		SELECT
-		SEQ, 
-		TYPE_ITEM,
-		TYPE_ARTICLE,
-		DATE_LOST,
-		DATE_UPLOAD,
-		HOLD,
-		PLACE,
-		TITLE,
-		CONTENTS,
-		IMAGE,
-		HITS
-		FROM TB_ARTICLE
-		WHERE SEQ=#{seq}
+		A.SEQ, 
+		A.TYPE_ITEM,
+		A.TYPE_ARTICLE,
+		A.DATE_LOST,
+		A.DATE_UPLOAD,
+		A.HOLD,
+		M.NICKNAME,
+		A.PLACE,
+		A.TITLE,
+		A.CONTENTS,
+		A.IMAGE,
+		A.HITS
+		FROM TB_ARTICLE A
+		INNER JOIN TB_MEMBER M
+		ON A.MEMBER_SEQ = M.SEQ
+		WHERE A.SEQ=#{seq}
 	</select>
 	
 </mapper>

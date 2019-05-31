@@ -24,7 +24,9 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="board">들어온 분실물 </a></li>
-              <!--<li><a href="upload">내 분실물 알리기</a></li> -->
+              <c:if test="${sessionScope.user.GRADE eq 'ADMIN'}">
+               <li><a href="items">보관중</a></li>
+              </c:if>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">추가개발예정 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">

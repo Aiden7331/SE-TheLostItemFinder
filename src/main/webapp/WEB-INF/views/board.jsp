@@ -15,6 +15,17 @@
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
+	<style>
+		#date{
+			font-size:15px;
+			font-style:italic;
+			color:#8C8C8C;
+		}
+		#title{
+			font-size:20px;
+			font-style:bold;
+		}
+	</style>
   </head>
 
   <body>
@@ -28,20 +39,6 @@
         <div class="col-xs-6 col-md-2" >
           <p></p>
 			
-          <!-- <div class="panel panel-success" style="margin-top:30%" data-spy="affix" data-offset="100" >
-            <div class="panel-heading">Menu
-            </div>
-            <div class="list-group">
-              <a href="#" class="list-group-item">
-                게시물 작성하기
-              </a>
-              <a href="#" class="list-group-item">게시물 수정하기</a>
-              <a href="#" class="list-group-item">게시물 삭제하기</a>
-              <a href="#" class="list-group-item">관리자에게 알리기</a>
-              <a href="#" class="list-group-item">추가개발예정</a>
-            </div>
-          </div> --> 
-
           </div>
           <div class="col-xs-12 col-md-10">
             <div class="page-header">
@@ -51,19 +48,19 @@
 			<div>
 			 <table class="table table-hover text-center">
 			  <tr>
-			    <th colspan="4" style="text-align:center;">${article.TITLE}</th>
+			    <th colspan="4" style="text-align:center;"><font id="title">${article.TITLE}</font></th>
 			  </tr>
 			  <tr>
-				<td colspan="3" style="text-align:left;">작성자 ${article.DATE_UPLOAD}</td><td>조회수 ${article.HITS }</td>
+				<td colspan="3" style="text-align:left;">${article.NICKNAME} <font id="date">${article.DATE_UPLOAD} 작성</font> </td><td style="text-align:right;">조회수 ${article.HITS }</td>
 			  </tr>
 			  <tr>
-				<td style="text-align:left">잃어버린 장소 </td><td style="text-align:left"> ${article.PLACE} </td>
+				<td style="text-align:center; width:15%">잃어버린 장소 </td><td colspan="3" style="text-align:left;"> ${article.PLACE} </td>
 			  </tr>
 			  <tr>
-				<td style="text-align:left">분실물 종류</td><td style="text-align:left;">${article.TYPE_ITEM}</td>
+				<td style="text-align:center; width:15%">분실물 종류</td><td colspan="3" style="text-align:left; width:50%">${article.TYPE_ITEM}</td>
 			  </tr>
 			  <tr>
-				<td colspan="4">${article.CONTENTS}</td>
+				<td colspan="4" style="text-align:left; height:200px" >${article.CONTENTS}</td>
 			  </tr>
 			 </table>
 			</div>
@@ -75,9 +72,18 @@
 			  <c:choose>
 			   <c:when test="${not empty replies}">
 			    <c:forEach var="reply" items="${replies}">
-			     <tr>
-			      <td>${reply.SEQ}</td><td>${reply.CONTENTS}</td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
-			     </tr>
+			     <c:choose>
+			      <c:when test="${sessionScope.user.NICKNAME eq reply.NICKNAME}">
+			       <tr>
+			        <td>${reply.REPLY_SEQ}</td><td>${reply.CONTENTS}&nbsp;<a href="#">삭제</a></td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
+			       </tr>
+			      </c:when>
+			      <c:when test="${sessionScope.user.NICKNAME ne reply.NICKNAME}">
+			       <tr>
+			        <td>${reply.REPLY_SEQ}</td><td>${reply.CONTENTS}</td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
+			       </tr>
+			      </c:when>
+			     </c:choose>
 			    </c:forEach>
 			   </c:when>
 			   <c:when test ="${empty replies}">
@@ -106,7 +112,14 @@
 			   </tr>
 			 </table>
 			<div>
-			 <button class="btn btn-default">수정</button><button class="btn btn-default">삭제</button><button class="btn btn-default">신고</button>
+			 <c:choose>
+			  <c:when test="${empty sessionScope.user or article.NICKNAME ne sessionScope.user.NICKNAME}">
+			   <button class="btn btn-default">신고</button>
+			  </c:when>
+			  <c:when test="${article.NICKNAME eq sessionScope.user.NICKNAME}" >
+			   <button class="btn btn-default">수정</button> <button class="btn btn-default" onclick="javascript:free(${article.SEQ})">삭제</button>
+			  </c:when>
+			 </c:choose>
 			</div>
 			</div>
 			

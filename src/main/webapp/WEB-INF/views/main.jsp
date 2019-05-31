@@ -34,14 +34,14 @@
 
       <!-- 그림 이미지 버튼입니다 -->
       <div class="row container">
-        <h3>최근 등록된 분실물 <span class="label label-success">New</span></h3>
+        <h3>관리실 보유중인 분실물</h3>
         <div class="col-sm-6 col-md-4">
           <div class="thumbnail">
             <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
             <div class="caption">
               <h3>지갑</h3>
-              <p>ㅇㅇ에서 찾은 지갑입니다.</p>
-              <p><a href="#" class="btn btn-primary" role="button">이동하기</a> </p>
+              <p>ㅇㅇ에서 찾은 지갑입니다.<span class="label label-success">New</span></p>
+              <p><a href="#" class="btn btn-primary" role="button">이동하기</a>   </p>
             </div>
           </div>
         </div>

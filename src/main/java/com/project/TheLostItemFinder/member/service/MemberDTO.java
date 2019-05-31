@@ -1,48 +1,48 @@
 package com.project.TheLostItemFinder.member.service;
 
 public class MemberDTO {
-	private String id;
-	private String pw;
-	private String tel;
-	private String grade;
-	private String nickName;
-	private int adminNum;
+	private String ID;
+	private String PW;
+	private String TEL;
+	private String GRADE;
+	private String NICKNAME;
+	private int ADMINNUM;
 	
-	public String getId() {
-		return id;
+	public String getID() {
+		return ID;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setID(String iD) {
+		ID = iD;
 	}
-	public String getPw() {
-		return pw;
+	public String getPW() {
+		return PW;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setPW(String pW) {
+		PW = pW;
 	}
-	public String getTel() {
-		return tel;
+	public String getTEL() {
+		return TEL;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setTEL(String tEL) {
+		TEL = tEL;
 	}
-	public String getGrade() {
-		return grade;
+	public String getGRADE() {
+		return GRADE;
 	}
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public void setGRADE(String gRADE) {
+		GRADE = gRADE;
 	}
-	public String getNickName() {
-		return nickName;
+	public String getNICKNAME() {
+		return NICKNAME;
 	}
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNICKNAME(String nICKNAME) {
+		NICKNAME = nICKNAME;
 	}
-	public int getAdminNum() {
-		return adminNum;
+	public int getADMINNUM() {
+		return ADMINNUM;
 	}
-	public void setAdminNum(int adminNum) {
-		this.adminNum = adminNum;
+	public void setADMINNUM(int aDMINNUM) {
+		ADMINNUM = aDMINNUM;
 	}
 	
 }

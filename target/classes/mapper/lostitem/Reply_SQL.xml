@@ -17,7 +17,7 @@
 		#{reply.DATE},
 		#{reply.CONTENTS},
 		#{reply.ARTICLE_SEQ},
-		(SELECT COUNT(*) FROM TB_ARTICLE WHERE ARTICLE_SEQ = #{reply.ARTICLE_SEQ})+1
+		(SELECT COUNT(*) + 1 FROM TB_REPLY TMP WHERE ARTICLE_SEQ = #{reply.ARTICLE_SEQ})
 		)
 	</insert>
 	

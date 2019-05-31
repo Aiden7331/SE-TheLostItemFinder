@@ -17,9 +17,6 @@ public class ArticleDAOImpl implements ArticleDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public ArticleDAOImpl(){
-	}
-	
 	public boolean insertItem(ArticleDTO dto) {
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("article", dto);

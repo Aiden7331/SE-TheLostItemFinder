@@ -37,6 +37,13 @@ public class MemberDAO {
 		return sqlSession.selectOne(namespace+".selectNickName",param);
 	}
 	
+	public MemberDTO getMember(String id) {
+		Map<String,Object> param = new HashMap<String, Object>();
+		System.out.println("id, pw"+id);
+		param.put("id", id);
+		return sqlSession.selectOne(namespace+".selectMember",param);
+	}
+	
 	public boolean insertMember(MemberDTO dto){
 		return false;
 	}

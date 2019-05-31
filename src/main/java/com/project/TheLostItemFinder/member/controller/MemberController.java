@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.TheLostItemFinder.member.service.MemberDTO;
 import com.project.TheLostItemFinder.member.service.MemberService;
 
 @Controller
@@ -26,23 +27,23 @@ public class MemberController {
 	
 	@RequestMapping(value="login",method=RequestMethod.POST)
 	public String login(Model model, HttpServletRequest request, @RequestParam("id") String id, @RequestParam("pw") String pw) {
-		String nickName;
-		if((nickName = serv.login(id, pw))!=null) {
+		MemberDTO member;
+		if((member = serv.login(id, pw))!=null) {
 		HttpSession session = request.getSession();
 		//session.isNew() 세션이 새로운 것인지?
-		session.setAttribute("user", nickName);
+		session.setAttribute("user", member);
 		}
 		return "main";
 	}
 	
 	@RequestMapping(value="logout",method=RequestMethod.POST)
-	public String login(Model model, HttpSession session) {
+	public String logout(Model model, HttpSession session) {
 		session.invalidate();
 		return "main";
 	}
 	
 	@RequestMapping(value="register",method=RequestMethod.GET)
-	public String signfor(Model model) {
+	public String register(Model model) {
 		return "register";
 	}
 }

@@ -14,7 +14,9 @@
     <link rel="icon" href="../favicon.ico">
 
     <title>물건을 찾아줘</title>
-	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
+	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>	
+	<script src="/TheLostItemFinder/js/board.js"></script>
+	
 	<style>
 		#date{
 			font-size:15px;
@@ -97,9 +99,9 @@
                 <c:when test="${not empty sessionScope.user}">
                  <form action="board" method="POST">
 			      <input type="hidden" name="id" value="${article.SEQ}">
-			      <input type="hidden" name="nickname" value="${sessionScope.user}"> 
+			      <input type="hidden" name="nickname" value="${sessionScope.user.NICKNAME}"> 
 			      <td colspan="3">
-			       <textarea style="width:100%; height:100%" name="contents"></textarea>
+			       <textarea style="width:100%; height:100%" rows="4" name="contents"></textarea>
 			      </td>
 			      <td>
 			   	   <input class="btn btn-default" style="width:100%; height:100%;" type="submit" value="뎃글 작성">
@@ -113,6 +115,10 @@
 			 </table>
 			<div>
 			 <c:choose>
+			  <c:when test="${sessionScope.user.GRADE eq 'ADMIN'}" >
+			   <button class="btn btn-default">보관등록</button> <button class="btn btn-default" onclick="javascript:free(${article.SEQ})">보관삭제</button>
+			   <button class="btn btn-default" onclick="javascript:free(${article.SEQ})">삭제</button>
+			  </c:when>
 			  <c:when test="${empty sessionScope.user or article.NICKNAME ne sessionScope.user.NICKNAME}">
 			   <button class="btn btn-default">신고</button>
 			  </c:when>
@@ -164,7 +170,7 @@
             </table>
           </div>
         </div>
-
+		
         <nav style="text-align:center">
           <ul class="pagination pagination-sm">
             <li>
@@ -184,11 +190,15 @@
             </li>
           </ul>
         </nav>
+      
       <!-- 그림 이미지 버튼입니다 -->
       <div class="container" style="text-align:center">
-        <form class="form-inline">
+        <form class="form-inline" method="GET" action="board">
+          <c:if test="${not empty article.SEQ}">
+          	<input type="hidden" id="articleNum2" value="${article.SEQ}" name="id">
+          </c:if>
           <div class="form-group">
-            <div class="btn-group " >
+            <div class="btn-group">
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 선택<span class="caret"></span>
               </button>
@@ -199,12 +209,15 @@
                 <li><a href="#">장소</a></li>
               </ul>
             </div>
-            <div class="btn-group " >
-              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="검색어를 입력하세요.">
+            <div class="btn-group">
+              <input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요.">
             </div>
             <button type="submit" class="btn btn-default">검색</button>
           </div>
         </form>
+        <div style="text-align:right">
+        	<button class="btn btn-default" onclick="javascript:location.href='upload'">글쓰기 </button>
+        </div>
       </div>
 
       <div class="page-header">

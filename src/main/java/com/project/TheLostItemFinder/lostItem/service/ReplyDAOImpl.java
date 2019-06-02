@@ -19,6 +19,7 @@ public class ReplyDAOImpl implements ReplyDAO{
 	public boolean insertReply(ReplyDTO dto) {
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("reply", dto);
+		System.out.println("Reply Writer :"+dto.getNICKNAME());
 		sqlSession.insert(namespace+".insertOne",param);
 		return true;
 	}

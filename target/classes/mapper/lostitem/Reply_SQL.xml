@@ -29,6 +29,7 @@
 		M.NICKNAME
 		FROM TB_REPLY R
 		INNER JOIN TB_MEMBER M
+		ON R.MEMBER_SEQ = M.SEQ
 		WHERE #{id}=ARTICLE_SEQ
 	</select>
 </mapper>

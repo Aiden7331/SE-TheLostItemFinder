@@ -129,6 +129,7 @@ public class LostItemController {
 	public String deleteItem(Model model,@RequestBody String seq) {
 		seq=seq.substring(seq.indexOf("=")+1, seq.length());
 		System.out.println("실행"+seq);
+		//TODO : 삭제 기능 + 세션인증 필요.
 		return "board";
 	}
 }

@@ -69,7 +69,7 @@
 			<div>
 			 <table class="table table-hover text-center">
 			  <tr style="width:100%">
-			   <th style="text-align:center; width:10%;">뎃글번호</th><th style="text-align:center; width:65%">내용</th><th style="text-align:center; width:20%">작성자</th><th style="text-align:center; width:15%">작성일</th>
+			   <th style="text-align:center; width:8%;">댓글번호</th><th style="text-align:center; width:65%">내용</th><th style="text-align:center; width:10%">작성자</th><th style="text-align:center; width:17%">작성일</th>
 			  </tr>
 			  <c:choose>
 			   <c:when test="${not empty replies}">
@@ -101,10 +101,13 @@
 			      <input type="hidden" name="id" value="${article.SEQ}">
 			      <input type="hidden" name="nickname" value="${sessionScope.user.NICKNAME}"> 
 			      <td colspan="3">
-			       <textarea style="width:100%; height:100%" rows="4" name="contents"></textarea>
+			       <textarea style="width:100%; height:100%" rows="4" onkeyup="counter(this,1500)" name="contents"></textarea>
+			       <div style="text-align:right;">
+			        <span id="reCount">0 / 1500</span>
+			       </div>
 			      </td>
 			      <td>
-			   	   <input class="btn btn-default" style="width:100%; height:100%;" type="submit" value="뎃글 작성">
+			   	   <input class="btn btn-default" style="width:100%; height:100%;" type="submit" value="댓글 작성">
 			      </td>
 			     </form>
                 </c:when>

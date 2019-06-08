@@ -1,7 +1,10 @@
 package com.project.TheLostItemFinder.member.controller;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -26,14 +29,25 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="login",method=RequestMethod.POST)
-	public String login(Model model, HttpServletRequest request, @RequestParam("id") String id, @RequestParam("pw") String pw) {
+	public void login(Model model, HttpServletRequest request, @RequestParam("id") String id, @RequestParam("pw") String pw, HttpServletResponse response) {
 		MemberDTO member;
+		String login;
+		
 		if((member = serv.login(id, pw))!=null) {
-		HttpSession session = request.getSession();
-		//session.isNew() 세션이 새로운 것인지?
-		session.setAttribute("user", member);
+			HttpSession session = request.getSession();
+			//session.isNew() 세션이 새로운 것인지?
+			session.setAttribute("user", member);
+			login="{\"message\":\"true\"}";
+		}else {
+			login="{\"message\":\"false\"}";
 		}
-		return "main";
+		try {
+			response.getWriter().print(login);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ;
 	}
 	
 	@RequestMapping(value="logout",method=RequestMethod.POST)

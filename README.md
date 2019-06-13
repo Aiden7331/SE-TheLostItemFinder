@@ -8,6 +8,9 @@
 4. JQuery
 5. Ajax
 
+사용 컴포넌트
+1. CKEDITOR
+
 사용플랫폼
 
 1. Apache Tomcat

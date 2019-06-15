@@ -15,6 +15,7 @@
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
+	<script src="TheLostItemFinder/js/items.js"></script>
   </head>
 
   <body>
@@ -99,6 +100,12 @@
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 선택<span class="caret"></span>
               </button>
+              <button type="button" onclick="dup_check()" class="btn btn-info dropdown-toggle" id="add" data-toggle="dropdown" aria-expanded="false">
+                추가<span class="caret"></span>
+              </button>
+              <button type="button" onclick="free(id)" class="btn btn-info dropdown-toggle" id="find" data-toggle="dropdown" aria-expanded="false">
+                찾아주기<span class="caret"></span>
+              </button>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">제목</a></li>
                 <li><a href="#">제목 + 내용</a></li>
@@ -128,6 +135,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/TheLostItemFinder/js/bootstrap.min.js"></script>
+    <script src="/TheLostItemFinder/js/common.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/TheLostItemFinder/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>

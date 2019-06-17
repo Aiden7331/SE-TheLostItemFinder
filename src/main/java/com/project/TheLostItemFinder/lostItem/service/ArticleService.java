@@ -25,9 +25,14 @@ public class ArticleService {
 	}
 	
 	public List<ArticleDTO> getList(int page, int delimit) throws Exception {
-		return dao.selectList(page, delimit);
+		return dao.selectList(page, delimit);	
 	}
 	
+	public List<ArticleDTO> getList(int page, int delimit, String searchType, String search) throws Exception {
+		return dao.selectList(page, delimit,searchType, search);	
+		
+	}
+
 	public boolean addReply(int seq, String contents, String writer){
 		ReplyDTO dto=new ReplyDTO();
 		dto.setDATE(fUtil.date());
@@ -37,18 +42,26 @@ public class ArticleService {
 		
 		return rdao.insertReply(dto);
 	}
-	public boolean addArticle(String title, String type_item, String contents, String place, String nickName) {
+	public boolean addArticle(String title, String type_item, String type_article, String contents, String place, String nickName) {
 		ArticleDTO dto=new ArticleDTO();
 		
 		dto.setDATE_UPLOAD(fUtil.date());
 		dto.setTITLE(title);
 		dto.setTYPE_ITEM(type_item);
+		dto.setTYPE_ARTICLE(type_article);
 		dto.setCONTENTS(contents);
 		dto.setPLACE(place);
 		dto.setNICKNAME(nickName);
 		dao.insertItem(dto);
 		
 		return true;
+	}
+	public boolean deleteArticle(int seq) {
+		return dao.deleteItem(seq);
+	}
+	
+	public boolean deleteReply(int seq) {
+		return rdao.deleteReply(seq);
 	}
 	
 }

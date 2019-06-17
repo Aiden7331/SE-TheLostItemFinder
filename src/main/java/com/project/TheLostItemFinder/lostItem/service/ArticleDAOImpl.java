@@ -30,12 +30,29 @@ public class ArticleDAOImpl implements ArticleDAO{
 		return true;
 	}
 	
-	/*public boolean deleteItem() {
-		return true;
-	}*/
+	
+	/*
+	 * Article 삭제에 성공하면 true를 반환
+	 * (non-Javadoc)
+	 * @see com.project.TheLostItemFinder.lostItem.service.ArticleDAO#deleteItem(int)
+	 */
+	public boolean deleteItem(int seq) {
+		if(sqlSession.delete(namespace+".deleteArticle",seq)==1)
+			return true;
+		return false;
+	}
 	
 	public List<ArticleDTO> selectList(int page, int delimit) throws Exception{
-		return sqlSession.selectList(namespace+".selectAll");
+		return sqlSession.selectList(namespace+".selectAll");	
+		
+	}
+	
+	public List<ArticleDTO> selectList(int page, int delimit, String searchType, String search) throws Exception{
+		HashMap<String,String> param = new HashMap<String,String>();
+		search="%"+search+"%";
+		param.put("search",search);
+		return sqlSession.selectList(namespace+".searchBy"+searchType,param);
+		
 	}
 	
 	public ArticleDTO selectAArticle(int seq) {

@@ -15,6 +15,36 @@
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
+	<script>
+		var target=null;
+		function give(){
+			var seq = document.getElementsByName("seq");
+			for(var i=0; i<seq.length; i++){
+				if(seq[i].checked==true){
+					target=seq[i].value;
+					break;
+				}
+			}
+			if(target==null){
+				alert("찾아줄 물건을 선택하세요.");
+				return ;
+			}
+			var option = "scrollbars=no,"
+						+"fullscreen=no,"
+						+"location=no,"
+						+"status=no,"
+						+"toolbar=no,"
+						+"resizeale=no,"
+						+"width=500,"
+						+"height=500";
+			var modal = window.open("find_result",target,option);
+		}
+		function drop(){
+			if(confirm("정말 선택한 물건을 폐기하겠습니까?")){
+				//TODO: 폐기 코드 작성.
+			}
+		}
+	</script>
   </head>
 
   <body>
@@ -51,15 +81,17 @@
             <p></p>
             <table class="table table-hover text-center">
               <tr class="info">
+              	<th style="width:7%; text-align:center;"><b>체크</b></th>
                 <th style="width:7%; text-align:center;"><b>글 번호</b></th>
                 <th style="width:15%; text-align:center;"><b>물건 종류</b></th>
                 <th style="width:21%; text-align:center;"><b>물건 사진</b></th>
-                <th style="width:30%; text-align:center;"><b>발견한 곳</b></th>
+                <th style="width:20%; text-align:center;"><b>발견한 곳</b></th>
                 <th style="width:10%; text-align:center;"><b>발견 날짜</b></th>
-                <th style="width:7%; text-align:center;"><b>업로드 날짜</b></th>
+                <th style="width:10%; text-align:center;"><b>업로드 날짜</b></th>
               </tr>
               <c:forEach var="article" items="${list}">
               <tr>
+              	<td><input type="radio" name="seq" value="${article.SEQ}"></td>
                 <td style="text-align:center">${article.SEQ}</td>
                 <td>${article.TYPE_ITEM}</td>
                 <td><img src="/TheLostItemFinder/site-image/main_image.png" alt="클릭하면 게시물로 이동합니다." width="40%"></td>
@@ -70,6 +102,11 @@
               </c:forEach>
             </table>
           </div>
+        </div>
+        <div style="text-align:right;">
+        	<input type="button" class="btn btn-info" value="찾아주기" onclick='give()'>
+        	<input type="button" class="btn btn-warning" value="보관취소" onclick="cencel()">
+        	<input type="button" class="btn btn-danger" value="폐기" onclick='drop()'>
         </div>
 
         <nav style="text-align:center">

@@ -50,9 +50,10 @@
 	  <div class="form-group form-inline">
 	    <label class="col-sm-2 control-label">ID</label>
 	    <div class="col-sm-10">
-	      <input type="input" class="form-control" id="inputEmail3" placeholder="사용할 ID를 입력해주세요.">
-	      <button type="submit" class="btn btn-primary">중복확인</button>
+	      <input type="text" class="form-control" id="inputID" placeholder="사용할 ID를 입력해주세요.">
+	      <button class="btn btn-primary" onclick="checkDouble()">중복확인</button>
 	    </div>
+	    <p id="notice"></p>
 	  </div>
 	</form>
 	

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ import com.project.TheLostItemFinder.lostItem.service.ArticleDAOImpl;
 import com.project.TheLostItemFinder.lostItem.service.ArticleDTO;
 import com.project.TheLostItemFinder.lostItem.service.ArticleService;
 import com.project.TheLostItemFinder.lostItem.service.ReplyDTO;
+import com.project.TheLostItemFinder.member.service.MemberDTO;
+
+import net.sf.json.JSONObject;
 
 @Controller
 public class LostItemController {
@@ -33,9 +37,51 @@ public class LostItemController {
 	ArticleService serv= new ArticleService();
 	
 	@RequestMapping(value = "board", method=RequestMethod.GET)
-	public String findItem(Model model, @RequestParam(value="id", required=false) Integer id) throws Exception {
+	public String findItem(Model model, @RequestParam(value="id", required=false) Integer id, 
+			@RequestParam(value="searchType",required=false) String searchType,
+			@RequestParam(value="search",required=false) String search) throws Exception {
 		ArticleDTO dto = null;
 		List<ReplyDTO> rlist = null;
+		/*게시물 출력*/
+		if(id!=null && (dto=serv.getArticle(id))!=null) {
+			System.out.println("Having article :"+dto);
+			model.addAttribute("article",dto);
+			model.addAttribute("isArticle",true);
+			rlist=serv.getReply(id);
+			model.addAttribute("replies",rlist);
+		}else {
+			model.addAttribute("isArticle",false);
+		}
+		List<ArticleDTO> list = null;
+		/*게시판 목록 출력*/
+		if(searchType==null) {
+			list = serv.getList(0, 0);
+		}else {
+			list = serv.getList(0, 0, searchType, search);	
+		}
+		
+		if(list!=null) {
+		model.addAttribute("list", list);
+		}else {
+			return "400_page";
+		}
+		
+		
+		
+		return "board";
+	}
+	
+	@RequestMapping(value = "board", method=RequestMethod.POST)
+	public String findItem(@RequestParam(value="contents", required=true) String contents,
+			@RequestParam(value="nickname", required=true) String nickname, 
+			@RequestParam(value="id", required=true) Integer id, Model model) throws Exception {
+		
+		System.out.println("received reply request");
+		serv.addReply(id, contents, nickname);
+		
+		ArticleDTO dto = null;
+		List<ReplyDTO> rlist = null;
+		/*게시물 출력*/
 		if(id!=null && (dto=serv.getArticle(id))!=null) {
 			System.out.println("Having article :"+dto);
 			model.addAttribute("article",dto);
@@ -46,6 +92,7 @@ public class LostItemController {
 			model.addAttribute("isArticle",false);
 		}
 		
+		/*게시판 목록 출력*/
 		List<ArticleDTO> list=serv.getList(0, 0);
 		if(list!=null) {
 		model.addAttribute("list", list);
@@ -53,6 +100,7 @@ public class LostItemController {
 		
 		return "board";
 	}
+	
 	
 	@RequestMapping(value="items", method=RequestMethod.GET)
 	public String admin(Model model, @RequestParam(value="id", required=false) Integer id) throws Exception {
@@ -76,18 +124,15 @@ public class LostItemController {
 		return "items";
 	}
 	
-	@RequestMapping(value = "board", method=RequestMethod.POST)
-	public String findItem(Model model, @RequestParam(value="id", required=true) Integer id, 
-			@RequestParam(value="contents", required=true) String contents,
-			@RequestParam(value="nickname", required=true) String nickname) throws Exception {
+	@RequestMapping(value="find_result", method=RequestMethod.GET)
+	public String adminGive(Model model, @RequestParam(value="seq", required=false) String seq) {
+		if(seq!=null) {
+			model.addAttribute(seq);
+		}
 		
-		System.out.println("received reply request");
-		serv.addReply(id, contents, nickname);
-		
-		
-		
-		return findItem(model,id);
+		return "find_result";
 	}
+	
 	
 	@RequestMapping(value = "upload", method=RequestMethod.GET)
 	public String write(Model model) {
@@ -117,19 +162,37 @@ public class LostItemController {
 	
 	@RequestMapping(value = "upload", method=RequestMethod.POST)
 	public String write(Model model, @RequestParam("title") String title, @RequestParam("contents") String contents,
-						@RequestParam("type_item") String type_item, @RequestParam("place") String place,
-						@RequestParam("nickname") String nickName) throws Exception {
+						@RequestParam("type_item") String type_item, @RequestParam("type_article") String type_article,
+						@RequestParam("place") String place, @RequestParam("nickname") String nickName) throws Exception {
 		
-		serv.addArticle(title, type_item, contents, place,nickName);
+		serv.addArticle(title, type_item, type_article, contents, place,nickName);
 		
-		return findItem(model,null);
+		return findItem(model,null,null,null);
 	}
 	
 	@RequestMapping(value="deleteitem", method=RequestMethod.POST)
-	public String deleteItem(Model model,@RequestBody String seq) {
-		seq=seq.substring(seq.indexOf("=")+1, seq.length());
-		System.out.println("실행"+seq);
-		//TODO : 삭제 기능 + 세션인증 필요.
+	public String deleteItem(Model model,@RequestBody String Msg, HttpServletRequest request) {
+		JSONObject json = JSONObject.fromObject(Msg);
+		int seq = Integer.parseInt((String)json.get("seq"));
+		HttpSession session=request.getSession();
+		if(session.isNew()){
+			//TODO :: JSON 실패 응답
+		}
+		MemberDTO mdto = (MemberDTO)session.getAttribute("user");
+		ArticleDTO adto = serv.getArticle(seq);
+		
+		if(mdto.getNICKNAME().equals(adto.getNICKNAME())) {
+			serv.deleteArticle(seq);
+		}
+		
+		return "board";
+	}
+	
+	@RequestMapping(value="deletereply", method=RequestMethod.POST)
+	public String deleteReply(Model model,@RequestBody String Msg, HttpServletRequest request) {
+		JSONObject json = JSONObject.fromObject(Msg);
+		//TODO: reply 삭제 기능 작성.
+		
 		return "board";
 	}
 }

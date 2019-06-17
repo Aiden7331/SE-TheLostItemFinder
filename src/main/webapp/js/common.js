@@ -2,7 +2,7 @@ var ctx = "/TheLostItemFinder";
    	 
 function login(form){
 	var Pw = document.getElementById('inputPw');
-	
+	var msg = false;
 	$.ajax({
 		url: $(form).attr('action'),
 		dataType:"json",
@@ -11,10 +11,15 @@ function login(form){
 		data:$(form).serialize(),
 		success: function(data){
 			if(data['message']=='false'){
-				alert("없는 사용자이거나 비밀번호가 틀렸습니다.");
-				location.href=ctx+"/login";
+				var warning = document.getElementById("warning");
+				warning.innerHTML="<div class='alert alert-danger' role='alert'>"+
+				"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+
+				"<span class='sr-only'>Error:</span> 아이디 혹은 패스워드가 틀렸습니다. </div>";
+				msg=false;
+				//location.href=ctx+"/login";
 				
 			}else{
+				msg=true;
 				location.href=ctx;
 			}
 		},
@@ -24,7 +29,7 @@ function login(form){
 		}
 	});
 	
-	return true;
+	return msg;
 }
 
 function logout(){

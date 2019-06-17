@@ -12,22 +12,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
-
+	<link type="text/css" rel="stylesheet" href="/TheLostItemFinder/css/board.css">
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>	
 	<script src="/TheLostItemFinder/js/board.js"></script>
 	
-	<style>
-		#date{
-			font-size:15px;
-			font-style:italic;
-			color:#8C8C8C;
-		}
-		#title{
-			font-size:20px;
-			font-style:bold;
-		}
-	</style>
   </head>
 
   <body>
@@ -50,7 +39,7 @@
 			<div>
 			 <table class="table table-hover text-center">
 			  <tr>
-			    <th colspan="4" style="text-align:center;"><font id="title">${article.TITLE}</font></th>
+			    <th colspan="4" style="text-align:center;">[${article.TYPE_ARTICLE}]<font id="title">${article.TITLE}</font></th>
 			  </tr>
 			  <tr>
 				<td colspan="3" style="text-align:left;">${article.NICKNAME} <font id="date">${article.DATE_UPLOAD} 작성</font> </td><td style="text-align:right;">조회수 ${article.HITS }</td>
@@ -77,7 +66,7 @@
 			     <c:choose>
 			      <c:when test="${sessionScope.user.NICKNAME eq reply.NICKNAME}">
 			       <tr>
-			        <td>${reply.REPLY_SEQ}</td><td>${reply.CONTENTS}&nbsp;<a href="#">삭제</a></td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
+			        <td>${reply.REPLY_SEQ}</td><td>${reply.CONTENTS}&nbsp;<a href="#" onclick="delRep(${reply.REPLY_SEQ})"><span class="glyphicon glyphicon-remove"></span></a></td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
 			       </tr>
 			      </c:when>
 			      <c:when test="${sessionScope.user.NICKNAME ne reply.NICKNAME}">
@@ -107,7 +96,7 @@
 			       </div>
 			      </td>
 			      <td>
-			   	   <input class="btn btn-default" style="width:100%; height:100%;" type="submit" value="댓글 작성">
+			   	   <input class="btn btn-success" style="width:100%; height:100%;" type="submit" value="댓글 작성">
 			      </td>
 			     </form>
                 </c:when>
@@ -119,14 +108,14 @@
 			<div>
 			 <c:choose>
 			  <c:when test="${sessionScope.user.GRADE eq 'ADMIN'}" >
-			   <button class="btn btn-default">보관등록</button> <button class="btn btn-default" onclick="javascript:free(${article.SEQ})">보관삭제</button>
-			   <button class="btn btn-default" onclick="javascript:free(${article.SEQ})">삭제</button>
+			   <button class="btn btn-default">보관하기</button> <button class="btn btn-default" onclick="">보관취소</button>
+			   <button class="btn btn-warning" onclick="javascript:free(${article.SEQ})">삭제</button>
 			  </c:when>
 			  <c:when test="${empty sessionScope.user or article.NICKNAME ne sessionScope.user.NICKNAME}">
 			   <button class="btn btn-default">신고</button>
 			  </c:when>
 			  <c:when test="${article.NICKNAME eq sessionScope.user.NICKNAME}" >
-			   <button class="btn btn-default">수정</button> <button class="btn btn-default" onclick="javascript:free(${article.SEQ})">삭제</button>
+			   <button class="btn btn-default">수정</button> <button class="btn btn-warning" onclick="javascript:free(${article.SEQ})">삭제</button>
 			  </c:when>
 			 </c:choose>
 			</div>
@@ -163,7 +152,10 @@
               <tr>
                 <td style="text-align:center">${article.SEQ}</td>
                 <td><img src="/TheLostItemFinder/site-image/main_image.png" alt="클릭하면 게시물로 이동합니다." width="40%"></td>
-                <td><a href="?id=${article.SEQ}">${article.TITLE}</a></td>
+                <td><a href="?id=${article.SEQ}">[${article.TYPE_ARTICLE}]${article.TITLE}</a>
+                <c:if test="${article.HOLD eq 1}">
+                	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                </c:if></td>
                 <td>${article.TYPE_ITEM}</td>
                 <td>${article.NICKNAME}</td>
                 <td>${article.HITS}</td>
@@ -203,26 +195,30 @@
           <div class="form-group">
             <div class="btn-group">
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                선택<span class="caret"></span>
+                	선택<span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">제목</a></li>
-                <li><a href="#">제목 + 내용</a></li>
-                <li><a href="#">물건 종류</a></li>
-                <li><a href="#">장소</a></li>
+                <li><a onclick="setCondition('Title')">제목</a></li>
+                <li><a onclick="setCondition('TitleContext')">제목 + 내용</a></li>
+                <li><a onclick="setCondition('Type')">물건 종류</a></li>
+                <li><a onclick="setCondition('Place')">장소</a></li>
               </ul>
             </div>
             <div class="btn-group">
               <input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요.">
+              <input type="hidden" id="searchType" name="searchType" value="Title">
             </div>
             <button type="submit" class="btn btn-default">검색</button>
           </div>
         </form>
-        <div style="text-align:right">
-        	<button class="btn btn-default" onclick="javascript:location.href='upload'">글쓰기 </button>
-        </div>
+        <c:if test="${not empty sessionScope.user}">
+	        <div style="text-align:right">
+	        	<button class="btn btn-default" onclick="javascript:location.href='upload'">글쓰기 </button>
+	        </div>
+        </c:if>
+        <div id="warning"></div>
       </div>
-
+	 
       <div class="page-header">
       </div>
 

@@ -8,11 +8,11 @@ public interface ArticleDAO {
 	
 	public boolean updateItem();
 	
-	/*public boolean deleteItem() {
-		return true;
-	}*/
+	public boolean deleteItem(int seq);
 	
 	public List<ArticleDTO> selectList(int page, int delimit) throws Exception;
+
+	public List<ArticleDTO> selectList(int page, int delimit, String searchType, String search) throws Exception;
 	
 	public ArticleDTO selectAArticle(int seq);
 }

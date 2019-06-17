@@ -1,3 +1,5 @@
+var ctx = "/TheLostItemFinder";
+
 function counter(text,length){
 	var limit = length;
 	var str = text.value.length;
@@ -7,4 +9,16 @@ function counter(text,length){
 		text.focus();
 	}
 	document.getElementById("reCount").innerHTML = text.value.length + " / " + limit;	
+}
+
+function setCondition(type){
+	var searchType=document.getElementById("searchType");
+	searchType.value = type;
+	
+}
+
+function delRep(seq){
+	if(confirm("정말로 댓글을 삭제하시겠습니까?")){
+		
+	}
 }

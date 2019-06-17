@@ -45,10 +45,10 @@
         <div class="page-header">
         <h1>약관동의</h1>
       </div>
-      <form id="termscheck" method="POST" action="register" onsubmit="validate();">
+      <form id="termscheck" method="GET" action="register-2" onsubmit="validate();">
       	<input type="hidden" name="next" value="1">
-      	<div style="overflow:scroll; width:100%; height:40%; padding:10px;">	
-		<p>
+      	<div style="overflow:scroll; width:100%; padding:10px;">	
+		<p style="height:500px;">
 			회원약관
 			<br>
 			<br>

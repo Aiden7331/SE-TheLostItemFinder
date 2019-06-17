@@ -56,13 +56,18 @@ public class MemberController {
 		return "main";
 	}
 	
-	@RequestMapping(value="register",method= {RequestMethod.GET,RequestMethod.POST})
-	public String register(Model model, @RequestParam(value="next",required=false) Integer next) {
-		if(next == null) {
-			return "terms";
-		}else if(next == 1) {
+	@RequestMapping(value="register-1", method = RequestMethod.GET)
+	public String register1(Model model) {
+		return "terms";
+	}
+	
+	@RequestMapping(value="register-2",method = RequestMethod.GET)
+	public String register2(Model model) {
 			return "register1";
-		}
-		return "register2";
+	}
+	
+	@RequestMapping(value="register-3",method = RequestMethod.POST)
+	public String register3(Model model) {
+			return "register2";
 	}
 }

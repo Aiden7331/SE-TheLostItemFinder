@@ -18,6 +18,8 @@
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/**" location="/js/" />
 	<resources mapping="/site-image/**" location="/site-image/" />
+	<resources mapping="/bootstrap/fonts/**" location="/bootstrap/fonts/" />
+	<resources mapping="/bootstrap/css/**" location="/bootstrap/css/" />
 	
 	
 

@@ -32,4 +32,10 @@
 		ON R.MEMBER_SEQ = M.SEQ
 		WHERE #{id}=ARTICLE_SEQ
 	</select>
+	
+	<delete id="deleteReply" parameterType="int">
+		DELETE
+		FROM TB_REPLY
+		WHERE SEQ = #{seq}
+	</delete>
 </mapper>

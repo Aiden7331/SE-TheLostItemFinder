@@ -38,19 +38,25 @@
 			<form method="POST" action="upload">
 	          <table class="table">
 	          	<tr>
-	            	<td><input class="inputtext" type="text" name="title" placeholder="제목을 입력하세요"></td>
+	            	<td><input class="form-control inputtext" type="text" name="title" placeholder="제목을 입력하세요"></td>
 	            </tr>
 	            <tr>
 	            	<td>잃어버린 날짜를 선택하세요.</td>
 	            </tr>
 	            <tr>
-	            	<td><input class="inputtext" type="text" name="place" placeholder="잃어버린 장소를 입력하세요"></td>
+	            	<td><input class="form-control inputtext" type="text" name="place" placeholder="잃어버린 장소를 입력하세요"></td>
 	            </tr>
 	            <tr>
-	            	<td><input class="inputtext" type="text" name="type_item" placeholder="분실물 종류를 입력하세요"></td>
+	            	<td>
+	            		<input class="form-control" style="width:50%" type="text" name="type_item" placeholder="분실물 종류를 입력하세요">
+	            		<select style="width:30%" name="type_article">
+	            			<option value="물건 찾는글">물건 찾아요</option>
+	            			<option value="주인 찾는글">주인 찾아요</option>
+	            		</select>
+	            		</td>
 	            </tr>
 	            <tr>
-	            	<td>이미지 첨부하기 <input type="file" id="image" name="fileData"></td>
+	            	<td>이미지 첨부하기 <input type="file" class="btn btn-default" id="image" name="fileData"></td>
 	            </tr>
 				<tr>
 					<td><textarea name="contents" id="editor" rows="10" cols="80" placeholder="내용을 입력하세요"> </textarea></td>
@@ -63,7 +69,7 @@
 	          <!-- Single button -->
 	          <div style="text-align:right;">
 			   <input type="hidden" name="nickname" value="${sessionScope.user.NICKNAME}">
-			   <input type="submit" value="작성완료"/>
+			   <input type="submit" class="btn btn-primary" value="작성완료"/>
 			</form>
 
 		      <div class="page-header">

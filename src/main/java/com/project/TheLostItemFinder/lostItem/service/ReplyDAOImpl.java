@@ -30,8 +30,12 @@ public class ReplyDAOImpl implements ReplyDAO{
 	}
 
 	@Override
-	public boolean deleteReply() {
-		return false;
+	public boolean deleteReply(int seq) {
+		if(sqlSession.delete(namespace+".deleteReply",seq)!=1) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	/*@Override

@@ -37,7 +37,7 @@ $(document).ready(function(){
     });
   });
 
-  $("#pw_check").keyup(fucntion() {
+  $("#pw_check").keyup(function() {
     var passwd1=$("#pw").val();
     var passwd2=$("#pw_check").val();
 
@@ -89,15 +89,24 @@ $(document).ready(function(){
 	    });
 	  });
 
-  $(".form-horizontal").submit(fucntion(event) {
+  $(".form-horizontal").submit(function(event) {
 	    if(idCheckResult==false) {
 	      event.preventDefault();
 	      alert("아이디 중복확인을 하시기 바랍니다.");
 	    }
 
-	    if(passwdCheckResult==false) {
+	    else if(passwdCheckResult==false) {
 	      event.preventDefault();
 	      alert("비밀번호가 일치하지 않습니다.");
+	    }
+	    
+	    else if(nicknameCheckResult==false) {
+		      event.preventDefault();
+		      alert("사용하려는 닉네임이 이미 존재합니다.");
+	    }
+	    
+	    else {
+	    	location.href="/TheLostItemFinder/views/success.jsp";
 	    }
 	  });
 });

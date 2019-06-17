@@ -73,7 +73,7 @@
 	    </div>
 	  </div>
 	 
-	  <div class="input-group">
+	  <div class="form-group">
 		<label class="col-sm-2 control-label">전화번호</label>
 		 <div class="col-sm-2">
 		  <input type="tel" class="form-control" id="inputPassword3" placeholder="전화번호를 입력해주세요.">
@@ -92,15 +92,6 @@
           <label class="col-sm-2 control-label" id="nicknamecheckresult"></label>
           </div>
         </div>
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <div class="checkbox">
-	        <label>
-	          <input type="checkbox"> Remember me
-	        </label>
-	      </div>
-	    </div>
-	  </div>
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
 	      <button type="submit" class="btn btn-default">제출하기</button>

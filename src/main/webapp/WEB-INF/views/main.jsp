@@ -35,38 +35,20 @@
       <!-- 그림 이미지 버튼입니다 -->
       <div class="row container">
         <h3>관리실 보유중인 분실물</h3>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
-            <div class="caption">
-              <h3>지갑</h3>
-              <p>ㅇㅇ에서 찾은 지갑입니다.<span class="label label-success">New</span></p>
-              <p><a href="#" class="btn btn-primary" role="button">이동하기</a>   </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
-            <div class="caption">
-              <h3>시계</h3>
-              <p>ㅇㅇ에서 찾은 시계입니다.
-              ㅇㅇ에서 보관하고있습니다.</p>
-              <p><a href="#" class="btn btn-primary" role="button">이동하기</a> </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
-            <div class="caption">
-              <h3>우산</h3>
-              <p>ㅇㅇ에서 찾은 우산입니다.
-              ㅇㅇ에서 보관하고 있으니 찾아가시기 바랍니다.</p>
-              <p><a href="#" class="btn btn-primary" role="button">이동하기</a> </p>
-            </div>
-          </div>
-        </div>
+        
+        <c:forEach var="article" items="${list}">
+	        <div class="col-sm-6 col-md-4">
+	          <div class="thumbnail">
+	            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
+	            <div class="caption">
+	              <h3>${article.TITLE}</h3>
+	              <p>${article.CONTENTS}<span class="label label-success">New</span></p>
+	              <p><a href="board?id=${article.SEQ}" class="btn btn-primary" role="button">이동하기</a>   </p>
+	            </div>
+	          </div>
+	        </div>
+        </c:forEach>
+        
         <div class="col-sm-6 col-md-4">
           <div class="thumbnail">
             <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">

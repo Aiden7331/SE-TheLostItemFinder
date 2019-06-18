@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -91,7 +92,10 @@ public class LostItemController {
 	@RequestMapping(value = "board", method=RequestMethod.POST)
 	public String findItem(@RequestParam(value="contents", required=true) String contents,
 			@RequestParam(value="nickname", required=true) String nickname, 
-			@RequestParam(value="id", required=true) Integer id, Model model) throws Exception {
+			@RequestParam(value="id", required=true) Integer id, Model model,
+			@RequestParam(value="searchType",required=false) String searchType,
+			@RequestParam(value="search",required=false) String search,
+			@RequestParam(value="limit", required=false) Integer limit) throws Exception {
 		
 		System.out.println("received reply request");
 		serv.addReply(id, contents, nickname);
@@ -108,11 +112,23 @@ public class LostItemController {
 		}else {
 			model.addAttribute("isArticle",false);
 		}
+		List<ArticleDTO> list = null;
 		
 		/*게시판 목록 출력*/
-		List<ArticleDTO> list=serv.getList(0, 0);
+		if(limit==null) {
+			limit=10;
+		}
+		if(searchType==null) {
+			list = serv.getList(0, limit);
+		}else {
+			list = serv.getList(0, 0, searchType, search);	
+		}
+		
 		if(list!=null) {
-		model.addAttribute("list", list);
+			model.addAttribute("page", 1);
+			model.addAttribute("list", list);
+		}else {
+			return "400_page";
 		}
 		
 		return "board";
@@ -120,9 +136,14 @@ public class LostItemController {
 	
 	
 	@RequestMapping(value="items", method=RequestMethod.GET)
-	public String admin(Model model, @RequestParam(value="id", required=false) Integer id) throws Exception {
+	public String admin(Model model, @RequestParam(value="id", required=false) Integer id,
+			@RequestParam(value="limit", required=false) Integer limit, HttpServletRequest request) throws Exception {
 		ArticleDTO dto = null;
 		List<ReplyDTO> rlist = null;
+		/*세션에서 관리실이름 획득*/
+		HttpSession session = request.getSession();
+		String office=(String)session.getAttribute("office");
+		/*게시물 출력*/
 		if(id!=null && (dto=serv.getArticle(id))!=null) {
 			System.out.println("Having article :"+dto);
 			model.addAttribute("article",dto);
@@ -132,10 +153,19 @@ public class LostItemController {
 		}else {
 			model.addAttribute("isArticle",false);
 		}
+		List<ArticleDTO> list = null;
 		
-		List<ArticleDTO> list=serv.getList(0, 0);
+		/*게시판 목록 출력*/
+		if(limit==null) {
+			limit=10;
+		}
+		list = serv.getAdminList(0, limit,office);
+		System.out.println("list :"+list.toString());
 		if(list!=null) {
-		model.addAttribute("list", list);
+			model.addAttribute("page", 1);
+			model.addAttribute("list", list);
+		}else {
+			return "400_page";
 		}
 		
 		return "items";
@@ -217,6 +247,28 @@ public class LostItemController {
 			serv.deleteReply(seq,article_seq);
 		}
 		
+		
+		return "board";
+	}
+	
+	@RequestMapping(value="additem", method=RequestMethod.GET)
+	public String addItem(Model model,@RequestParam(value="seq") int seq, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session=request.getSession();
+		if(session.isNew()){
+			//TODO :: JSON 실패 응답
+		}
+		
+		String office = (String)session.getAttribute("office");
+		try {
+			if(serv.setOffice(seq, office)) {
+				response.getWriter().print("{\"meesage\":true}");
+			}else {
+				response.getWriter().print("{\"meesage\":false}");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "board";
 	}

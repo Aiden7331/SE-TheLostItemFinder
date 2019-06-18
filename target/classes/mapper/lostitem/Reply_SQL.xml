@@ -26,13 +26,14 @@
 		R.REPLY_SEQ,
 		R.CONTENTS,
 		R.DATE,
-		M.NICKNAME
+		M.NICKNAME,
+		R.ARTICLE_SEQ
 		FROM TB_REPLY R
 		INNER JOIN TB_MEMBER M
 		ON R.MEMBER_SEQ = M.SEQ
 		WHERE #{id}=ARTICLE_SEQ
 	</select>
-	<select id="selectOne" parameterType="int">
+	<select id="selectOne" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ReplyDTO">
 		SELECT 
 		R.REPLY_SEQ,
 		R.CONTENTS,

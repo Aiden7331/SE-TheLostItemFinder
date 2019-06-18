@@ -29,7 +29,11 @@ public class MemberDAO {
 			return false;
 		}
 	}
-	
+	public String getOffice(String seq) {
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("seq", seq);
+		return sqlSession.selectOne(namespace+".selectOffice",param);
+	}
 	public String getNickName(String id) {
 		Map<String,Object> param = new HashMap<String, Object>();
 		System.out.println("id, pw"+id);

@@ -122,7 +122,7 @@
 		ORDER BY A.SEQ DESC LIMIT 10
 	</select>
 	
-	<select id = "selectAll" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
+	<select id = "selectAll" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO" parameterType="HashMap">
 		SELECT
 		A.SEQ, 
 		A.TYPE_ITEM,
@@ -139,6 +139,52 @@
 		FROM TB_ARTICLE A
 		INNER JOIN TB_MEMBER M 
 		ON M.SEQ=A.MEMBER_SEQ
+		ORDER BY A.SEQ DESC LIMIT #{limit}
+		OFFSET #{page}
+	</select>
+	
+	<select id= "selectAdminAll" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO" parameterType="HashMap">
+		SELECT
+		A.SEQ, 
+		A.TYPE_ITEM,
+		A.TYPE_ARTICLE,
+		A.DATE_LOST,
+		A.DATE_UPLOAD,
+		A.HOLD,
+		M.NICKNAME,
+		A.PLACE,
+		A.TITLE,
+		A.CONTENTS,
+		A.IMAGE,
+		A.HITS
+		FROM TB_MEMBER M
+		INNER JOIN TB_ARTICLE A
+		ON M.SEQ=A.MEMBER_SEQ
+		WHERE A.OFFICE_SEQ IS NOT NULL
+		ORDER BY A.SEQ DESC LIMIT #{limit}
+		OFFSET #{page}
+	</select>
+	
+	<select id= "selectAdmin" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO" parameterType="HashMap">
+		SELECT
+		A.SEQ, 
+		A.TYPE_ITEM,
+		A.TYPE_ARTICLE,
+		A.DATE_LOST,
+		A.DATE_UPLOAD,
+		A.HOLD,
+		M.NICKNAME,
+		A.PLACE,
+		A.TITLE,
+		A.CONTENTS,
+		A.IMAGE,
+		A.HITS
+		FROM TB_MEMBER M
+		INNER JOIN TB_ARTICLE A
+		ON M.SEQ=A.MEMBER_SEQ
+		INNER JOIN TB_OFFICE O
+		ON A.OFFICE_SEQ = O.SEQ
+		WHERE O.NAME = #{office}
 		ORDER BY A.SEQ DESC LIMIT #{limit}
 		OFFSET #{page}
 	</select>
@@ -173,4 +219,15 @@
 		WHERE
 		SEQ=#{seq}
 	</delete>
+	<update id="setOffice" parameterType="HashMap">
+		UPDATE TB_ARTICLE
+		SET OFFICE_SEQ=
+		(SELECT 
+		SEQ
+		FROM TB_OFFICE
+		WHERE
+		NAME = #{office} 
+		)
+		WHERE SEQ=#{seq}
+	</update>
 </mapper>

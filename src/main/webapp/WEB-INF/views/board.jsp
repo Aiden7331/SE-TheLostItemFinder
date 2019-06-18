@@ -108,8 +108,8 @@
 			<div>
 			 <c:choose>
 			  <c:when test="${sessionScope.user.GRADE eq 'ADMIN'}" >
-			   <button class="btn btn-default">보관하기</button> <button class="btn btn-default" onclick="">보관취소</button>
-			   <button class="btn btn-warning" onclick="javascript:free(${article.SEQ})">삭제</button>
+			   <button class="btn btn-default" onclick="store(${article.SEQ})">보관하기</button> <button class="btn btn-default" onclick="">보관취소</button>
+			   <button class="btn btn-warning" onclick="free(${article.SEQ})">삭제</button>
 			  </c:when>
 			  <c:when test="${empty sessionScope.user or article.NICKNAME ne sessionScope.user.NICKNAME}">
 			   <button class="btn btn-default">신고</button>

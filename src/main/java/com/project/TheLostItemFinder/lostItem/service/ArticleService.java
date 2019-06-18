@@ -38,7 +38,19 @@ public class ArticleService {
 		return dao.selectList(page, delimit,searchType, search);	
 		
 	}
-
+	
+	public List<ArticleDTO> getThumbnail(){
+		return dao.selectThumbnail();
+	}
+	
+	public List<ArticleDTO> getAdminList(int page, int delimit, String office)throws Exception {
+		return dao.selectAdminList(page, delimit, office);
+	}
+	
+	public boolean setOffice(int seq, String office) {
+		return dao.setOffice(seq, office);
+	}
+	
 	public boolean addReply(int seq, String contents, String writer){
 		ReplyDTO dto=new ReplyDTO();
 		dto.setDATE(fUtil.date());

@@ -6,7 +6,8 @@ public class MemberDTO {
 	private String TEL;
 	private String GRADE;
 	private String NICKNAME;
-	private int ADMINNUM;
+	private String OFFICE_SEQ;
+	private String NAME; // 관리실명
 	
 	public String getID() {
 		return ID;
@@ -38,11 +39,18 @@ public class MemberDTO {
 	public void setNICKNAME(String nICKNAME) {
 		NICKNAME = nICKNAME;
 	}
-	public int getADMINNUM() {
-		return ADMINNUM;
+	
+	public String getOFFICE_SEQ() {
+		return OFFICE_SEQ;
 	}
-	public void setADMINNUM(int aDMINNUM) {
-		ADMINNUM = aDMINNUM;
+	public void setOFFICE_SEQ(String oFFICE_SEQ) {
+		OFFICE_SEQ = oFFICE_SEQ;
+	}
+	public String getNAME() {
+		return NAME;
+	}
+	public void setNAME(String nAME) {
+		NAME = nAME;
 	}
 	
 }

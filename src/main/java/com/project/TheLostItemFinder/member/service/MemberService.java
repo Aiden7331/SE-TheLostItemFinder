@@ -22,6 +22,10 @@ public class MemberService {
 		return true;
 	}
 	
+	public String getOffice(String seq) {
+		return dao.getOffice(seq);
+	}
+	
 	public MemberDTO login(String id, String pw) {
 		if(dao.confirmPW(id, pw)) {
 			return dao.getMember(id);

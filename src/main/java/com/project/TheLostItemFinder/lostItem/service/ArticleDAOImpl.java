@@ -41,7 +41,16 @@ public class ArticleDAOImpl implements ArticleDAO{
 			return true;
 		return false;
 	}
-	
+	public boolean setOffice(int seq, String office) {
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		
+		param.put("seq", seq);
+		param.put("office", office);
+		if(sqlSession.update(namespace+".setOffice", param)!=1) {
+			return false;
+		}
+		return true;
+	}
 	public int totalPage(int delimit) {
 		int count=sqlSession.selectOne(namespace+".selectPage");
 		
@@ -71,4 +80,20 @@ public class ArticleDAOImpl implements ArticleDAO{
 		sqlSession.update(namespace+".updateHits",param);
 		return sqlSession.selectOne(namespace+".selectOne",param);
 	}
+	public List<ArticleDTO> selectThumbnail(){
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		param.put("page", 0);
+		param.put("limit", 10);
+		return sqlSession.selectList(namespace+".selectAdminAll",param);
+	}
+	@Override
+	public List<ArticleDTO> selectAdminList(int page, int delimit, String office) throws Exception {
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		page*=delimit;
+		param.put("office", office);
+		param.put("page", page);
+		param.put("limit", delimit);
+		return sqlSession.selectList(namespace+".selectAdmin",param);	
+	}
+
 }

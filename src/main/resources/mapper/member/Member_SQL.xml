@@ -15,8 +15,15 @@
 		SELECT 
 		NICKNAME,
 		ID,
-		GRADE
+		GRADE,
+		OFFICE_SEQ
 		FROM TB_MEMBER
 		WHERE ID=#{id}
+	</select>
+	<select id="selectOffice" parameterType="HashMap" resultType="String">
+		SELECT
+		NAME
+		FROM TB_OFFICE
+		WHERE SEQ = #{seq}
 	</select>
 </mapper>

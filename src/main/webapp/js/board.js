@@ -59,7 +59,7 @@ function setCondition(type){
 
 function delRep(seq,aseq){
 	if(confirm("정말로 댓글을 삭제하시겠습니까?")){
-		alert(seq);
+		alert(seq+" "+aseq);
 		$.ajax({
 			type:'GET',
 			url:ctx+'/deletereply',
@@ -72,6 +72,23 @@ function delRep(seq,aseq){
 			}
 		});
 	}
+}
+
+function store(id){
+	alert("관리실에 보관합니다.");
+	$.ajax({
+		type:'GET',
+		url:ctx+'/additem',
+		data:"seq="+id,
+		success:function(data){
+			if(data['message'] == false){
+				alert("다시 시도하세요");
+			}
+		},error:function(request,status,error){
+			alert("다시 시도하세요 (error Name = "+status+", code="+ error +", message = "+request.responseText);
+			location.href=ctx+"/board";
+		}
+	})
 }
 
 function free(id){

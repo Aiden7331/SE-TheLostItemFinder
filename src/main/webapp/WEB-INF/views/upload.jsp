@@ -11,11 +11,37 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <title>물건을 찾아줘</title>
     <jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
     <script src="//cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/TheLostItemFinder/js/upload.js"></script>
+    <script>
+    $(function() {
+    	$("#datepicker").datepicker({
+    		showOtherMonth: true,
+    		selectOtherMonth: true,
+    		changeMonth: true,
+    		changeYear : true,
+    		dateFormat: "yy-mm-dd"
+    	});
+    });
+
+    $.datepicker.setDefaults({
+    	prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+    </script>
   	<style>
     	.inputtext{width:100%;}
     </style>
@@ -35,13 +61,13 @@
           <div class="page-header">
             <h1>게시물 작성</h1>
           </div>
-			<form method="POST" action="upload">
+			<form method="POST" action="upload" onsubmit="return checkValidate(this)" name="inputgroup">
 	          <table class="table">
 	          	<tr>
 	            	<td><input class="form-control inputtext" type="text" name="title" placeholder="제목을 입력하세요"></td>
 	            </tr>
 	            <tr>
-	            	<td>잃어버린 날짜를 선택하세요.</td>
+	            	<td><input class="form-control inputtext" type="text" id="datepicker" name="date" placeholder="잃어버린 날짜를 선택하세요."></td>
 	            </tr>
 	            <tr>
 	            	<td><input class="form-control inputtext" type="text" name="place" placeholder="잃어버린 장소를 입력하세요"></td>
@@ -83,7 +109,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script-->
     <script src="/TheLostItemFinder/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/TheLostItemFinder/assets/js/ie10-viewport-bug-workaround.js"></script>

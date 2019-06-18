@@ -272,4 +272,15 @@ public class LostItemController {
 		
 		return "board";
 	}
+	@RequestMapping(value="setgiven", method=RequestMethod.GET)
+	public String addItem(Model model,@RequestParam(value="seq") int seq,
+			@RequestParam(value="name")String name, @RequestParam(value="tel")String tel,
+			@RequestParam(value="memo")String memo, HttpServletResponse response) {
+		if(serv.setGiven(name, memo, tel, seq)) {
+			//TODO 성공
+		}else {
+			//TODO 실패
+		}
+		return "items";
+	}
 }

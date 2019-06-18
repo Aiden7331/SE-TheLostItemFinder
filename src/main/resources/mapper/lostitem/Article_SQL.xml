@@ -230,4 +230,13 @@
 		)
 		WHERE SEQ=#{seq}
 	</update>
+	<update id="setGiven" parameterType="HashMap">
+		UPDATE TB_ARTICLE
+		SET
+		NAME_EXPIRE=#{name},
+		DATE_EXPIRE=#{date},
+		TEL_EXPIRE=#{tel},
+		MEMO_EXPIRE=#{memo}
+		WHERE SEQ=#{seq}
+	</update>
 </mapper>

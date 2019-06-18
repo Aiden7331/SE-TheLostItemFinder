@@ -14,11 +14,7 @@
     <link rel="icon" href="../favicon.ico">
 
     <title>물건을 찾아줘</title>
-<<<<<<< HEAD
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
-=======
-	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
->>>>>>> branch 'master' of https://github.com/Aiden7331/SE-TheLostItemFinder.git
 	<script>
 		var target=null;
 		function give(){
@@ -138,11 +134,7 @@
         <form class="form-inline">
           <div class="form-group">
             <div class="btn-group " >
-<<<<<<< HEAD
-              <button type="button" onclick="free(id)" class="btn btn-info dropdown-toggle" id="find" data-toggle="dropdown" aria-expanded="false">
-=======
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
->>>>>>> branch 'master' of https://github.com/Aiden7331/SE-TheLostItemFinder.git
                 선택<span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">

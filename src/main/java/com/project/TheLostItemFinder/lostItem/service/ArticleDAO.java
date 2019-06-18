@@ -21,4 +21,6 @@ public interface ArticleDAO {
 	public int totalPage(int delimit);
 	
 	public boolean setOffice(int seq, String office);
+
+	List<ArticleDTO> selectThumbnail();
 }

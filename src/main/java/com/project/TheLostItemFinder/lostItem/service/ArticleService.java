@@ -83,4 +83,8 @@ public class ArticleService {
 		return rdao.deleteReply(seq, article_seq);
 	}
 	
+	public boolean setGiven(String name, String memo, String tel, int seq) {
+		return dao.setGiven(name, memo, tel, seq);
+	}
+	
 }

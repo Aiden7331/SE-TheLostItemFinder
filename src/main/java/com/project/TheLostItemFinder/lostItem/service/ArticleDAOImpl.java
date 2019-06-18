@@ -42,9 +42,19 @@ public class ArticleDAOImpl implements ArticleDAO{
 		return false;
 	}
 	
-	public List<ArticleDTO> selectList(int page, int delimit) throws Exception{
-		return sqlSession.selectList(namespace+".selectAll");	
+	public int totalPage(int delimit) {
+		int count=sqlSession.selectOne(namespace+".selectPage");
 		
+		return count/delimit + 1;
+	}
+	
+	public List<ArticleDTO> selectList(int page, int delimit) throws Exception{
+		HashMap<String,Integer> param = new HashMap<String,Integer>();
+		page*=delimit;
+		
+		param.put("page", page);
+		param.put("limit", delimit);
+		return sqlSession.selectList(namespace+".selectAll",param);	
 	}
 	
 	public List<ArticleDTO> selectList(int page, int delimit, String searchType, String search) throws Exception{

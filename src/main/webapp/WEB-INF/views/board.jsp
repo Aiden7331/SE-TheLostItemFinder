@@ -66,7 +66,7 @@
 			     <c:choose>
 			      <c:when test="${sessionScope.user.NICKNAME eq reply.NICKNAME}">
 			       <tr>
-			        <td>${reply.REPLY_SEQ}</td><td>${reply.CONTENTS}&nbsp;<a href="#" onclick="delRep(${reply.REPLY_SEQ})"><span class="glyphicon glyphicon-remove"></span></a></td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
+			        <td>${reply.REPLY_SEQ}</td><td>${reply.CONTENTS}&nbsp;<a href="#" onclick="delRep(${reply.REPLY_SEQ},${reply.ARTICLE_SEQ})"><span class="glyphicon glyphicon-remove"></span></a></td><td>${reply.NICKNAME}</td><td>${reply.DATE}</td>
 			       </tr>
 			      </c:when>
 			      <c:when test="${sessionScope.user.NICKNAME ne reply.NICKNAME}">
@@ -128,12 +128,15 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   보기 <span class="caret"></span>
                 </button>
+                <input type="hidden" id="limit" name="limit" value="10">
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#">최신순</a></li>
                   <li><a href="#">추가예정</a></li>
                   <li><a href="#">추가예정</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">추가예정</a></li>
+                  <li><a href="#" onclick="divide(5)">5개씩 보기</a></li>
+                  <li><a href="#" onclick="divide(10)">10개씩 보기</a></li>
+                  <li><a href="#" onclick="divide(15)">15개씩 보기</a></li>
                 </ul>
               </div>
             </div>
@@ -166,23 +169,10 @@
           </div>
         </div>
 		
+		<input type="hidden" id="page" value="${page}">
         <nav style="text-align:center">
-          <ul class="pagination pagination-sm">
-            <li>
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+          <ul id="pages" class="pagination pagination-sm">
+
           </ul>
         </nav>
       

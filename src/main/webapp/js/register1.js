@@ -5,9 +5,8 @@ $(document).ready(function(){
   var idCheckResult=false;
   var nicknameCheckResult=false;
 
-  $(".btn btn primary").click(function() {
+  function checkDouble() {
     var input_id=$("#inputEmail3").val();
-
     $.ajax({
       data : {
         input_id : input_id
@@ -35,7 +34,7 @@ $(document).ready(function(){
         alert("에러가 발생했습니다.\n에러내용: " + error);
       }
     });
-  });
+  };
 
   $("#pw_check").keyup(function() {
     var passwd1=$("#pw").val();

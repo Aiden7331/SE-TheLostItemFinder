@@ -50,6 +50,12 @@ public class MemberController {
 		return ;
 	}
 	
+	@RequestMapping(value="checkDouble", method=RequestMethod.GET)
+	public String checkDouble() {
+		//TODO 중복확인
+		return "register1";
+	}
+	
 	@RequestMapping(value="logout",method=RequestMethod.POST)
 	public String logout(Model model, HttpSession session) {
 		session.invalidate();

@@ -28,6 +28,7 @@
 		WHERE NICKNAME=#{article.NICKNAME})
 		)
 	</insert>
+	
 	<update id = "updateHits" parameterType="HashMap">
 		UPDATE TB_ARTICLE
 		SET HITS=HITS+1
@@ -138,7 +139,14 @@
 		FROM TB_ARTICLE A
 		INNER JOIN TB_MEMBER M 
 		ON M.SEQ=A.MEMBER_SEQ
-		ORDER BY A.SEQ DESC LIMIT 10
+		ORDER BY A.SEQ DESC LIMIT #{limit}
+		OFFSET #{page}
+	</select>
+	
+	<select id="selectPage" parameterType="HashMap" resultType="int">
+		SELECT 
+		COUNT(*)
+		FROM TB_ARTICLE;
 	</select>
 	<select id ="selectOne" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
 		SELECT

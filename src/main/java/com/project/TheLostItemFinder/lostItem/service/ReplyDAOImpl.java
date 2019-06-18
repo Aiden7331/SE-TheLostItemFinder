@@ -30,7 +30,15 @@ public class ReplyDAOImpl implements ReplyDAO{
 	}
 
 	@Override
-	public boolean deleteReply(int seq) {
+	public int deleteReplies(int article_seq) {
+		return sqlSession.delete(namespace+".deleteReplies",article_seq);
+	}
+
+	@Override
+	public boolean deleteReply(int seq,int article_seq) {
+		HashMap<String,Integer> param = new HashMap<String,Integer>();
+		param.put("seq", seq);
+		param.put("article_seq",article_seq);
 		if(sqlSession.delete(namespace+".deleteReply",seq)!=1) {
 			return false;
 		}
@@ -45,7 +53,12 @@ public class ReplyDAOImpl implements ReplyDAO{
 		param.put("id", id);
 		return sqlSession.selectOne(namespace+".selectSeq",param);
 	}*/
-
+	public ReplyDTO selectAReply(Integer seq,Integer article_seq) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("seq",seq);
+		param.put("article_seq", article_seq);
+		return sqlSession.selectOne(namespace+".selectOne",param);
+	}
 	@Override
 	public List<ReplyDTO> selectReply(Integer id) {
 		Map<String,Object> param = new HashMap<String,Object>();

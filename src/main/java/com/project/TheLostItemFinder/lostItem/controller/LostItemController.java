@@ -39,7 +39,8 @@ public class LostItemController {
 	@RequestMapping(value = "board", method=RequestMethod.GET)
 	public String findItem(Model model, @RequestParam(value="id", required=false) Integer id, 
 			@RequestParam(value="searchType",required=false) String searchType,
-			@RequestParam(value="search",required=false) String search) throws Exception {
+			@RequestParam(value="search",required=false) String search,
+			@RequestParam(value="limit", required=false) Integer limit) throws Exception {
 		ArticleDTO dto = null;
 		List<ReplyDTO> rlist = null;
 		/*게시물 출력*/
@@ -53,22 +54,38 @@ public class LostItemController {
 			model.addAttribute("isArticle",false);
 		}
 		List<ArticleDTO> list = null;
+		
 		/*게시판 목록 출력*/
+		if(limit==null) {
+			limit=10;
+		}
 		if(searchType==null) {
-			list = serv.getList(0, 0);
+			list = serv.getList(0, limit);
 		}else {
 			list = serv.getList(0, 0, searchType, search);	
 		}
 		
 		if(list!=null) {
-		model.addAttribute("list", list);
+			model.addAttribute("page", 1);
+			model.addAttribute("list", list);
 		}else {
 			return "400_page";
 		}
 		
-		
-		
 		return "board";
+	}
+	
+	@RequestMapping(value = "boardpage", method=RequestMethod.GET)
+	public void totalPage(int limit,HttpServletResponse response) {
+		String message;
+		message = "{\"total\":\"" + dao.totalPage(limit) + "\"}";
+		try {
+			response.getWriter().print(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ;
 	}
 	
 	@RequestMapping(value = "board", method=RequestMethod.POST)
@@ -167,13 +184,11 @@ public class LostItemController {
 		
 		serv.addArticle(title, type_item, type_article, contents, place,nickName);
 		
-		return findItem(model,null,null,null);
+		return findItem(model,null,null,null,null);
 	}
 	
-	@RequestMapping(value="deleteitem", method=RequestMethod.POST)
-	public String deleteItem(Model model,@RequestBody String Msg, HttpServletRequest request) {
-		JSONObject json = JSONObject.fromObject(Msg);
-		int seq = Integer.parseInt((String)json.get("seq"));
+	@RequestMapping(value="deleteitem", method=RequestMethod.GET)
+	public String deleteItem(Model model,@RequestParam(value="seq") int seq, HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		if(session.isNew()){
 			//TODO :: JSON 실패 응답
@@ -188,10 +203,20 @@ public class LostItemController {
 		return "board";
 	}
 	
-	@RequestMapping(value="deletereply", method=RequestMethod.POST)
-	public String deleteReply(Model model,@RequestBody String Msg, HttpServletRequest request) {
-		JSONObject json = JSONObject.fromObject(Msg);
-		//TODO: reply 삭제 기능 작성.
+	@RequestMapping(value="deletereply", method=RequestMethod.GET)
+	public String deleteReply(Model model,@RequestParam(value="seq") int seq, @RequestParam(value="aseq") int article_seq, HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		if(session.isNew()){
+			//TODO :: JSON 실패 응답
+		}
+		
+		MemberDTO mdto = (MemberDTO)session.getAttribute("user");
+		ReplyDTO rdto = serv.getAReply(seq,article_seq);
+		
+		if(mdto.getNICKNAME().equals(rdto.getNICKNAME())) {
+			serv.deleteReply(seq,article_seq);
+		}
+		
 		
 		return "board";
 	}

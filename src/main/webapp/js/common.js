@@ -44,21 +44,3 @@ function logout(){
    		 }
    	 });
 }
-
-function free(id){
-	if(confirm("정말 글을 삭제하겠습니까?")){
-	$.ajax({
-		type:'POST',
-		url:ctx+'/deleteitem',
-		contentType:'application/json',
-		data:{"seq":id},
-		success:function(data){
-			alert("글이 삭제되었습니다");
-			location.href=ctx+"/board";
-		},error:function(request,status,error){
-			alert("다시 시도하세요 (error Name = "+status+", code="+ error +", message = "+request.responseText);
-			location.href=ctx+"/board";
-		}
-	});
-	}
-}

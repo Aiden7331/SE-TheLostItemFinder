@@ -19,9 +19,15 @@ public class ArticleService {
 	public ArticleDTO getArticle(int seq) {
 		return dao.selectAArticle(seq);
 	}
-	
+	public ReplyDTO getAReply(int seq, int article_seq) {
+		return rdao.selectAReply(seq,article_seq);
+	}
 	public List<ReplyDTO> getReply(int seq) {
 		return rdao.selectReply(seq);
+	}
+	
+	public int totalPage(int delimit) {
+		return dao.totalPage(delimit);
 	}
 	
 	public List<ArticleDTO> getList(int page, int delimit) throws Exception {
@@ -57,11 +63,12 @@ public class ArticleService {
 		return true;
 	}
 	public boolean deleteArticle(int seq) {
+		rdao.deleteReplies(seq);
 		return dao.deleteItem(seq);
 	}
 	
-	public boolean deleteReply(int seq) {
-		return rdao.deleteReply(seq);
+	public boolean deleteReply(int seq,int article_seq) {
+		return rdao.deleteReply(seq, article_seq);
 	}
 	
 }

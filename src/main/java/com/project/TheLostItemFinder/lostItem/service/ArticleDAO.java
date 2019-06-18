@@ -15,4 +15,6 @@ public interface ArticleDAO {
 	public List<ArticleDTO> selectList(int page, int delimit, String searchType, String search) throws Exception;
 	
 	public ArticleDTO selectAArticle(int seq);
+	
+	public int totalPage(int delimit);
 }

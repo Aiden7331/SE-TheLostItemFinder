@@ -46,7 +46,6 @@
         <h1>약관동의</h1>
       </div>
       <form id="termscheck" method="GET" action="register-2" onsubmit="validate();">
-      	<input type="hidden" name="next" value="1">
       	<div style="overflow:scroll; width:100%; padding:10px;">	
 		<p style="height:500px;">
 			회원약관
@@ -201,7 +200,7 @@
 		
 		<div id="check">
 			<h3>
-				<input type="checkbox" name="agree" value="이용약관 및 개인정보 수집방침에 동의합니다." />
+				<input type="checkbox" value="이용약관 및 개인정보 수집방침에 동의합니다." />
 				이용약관 및 개인정보 수집방침에 동의합니다.
 			</h3>
 			<br>

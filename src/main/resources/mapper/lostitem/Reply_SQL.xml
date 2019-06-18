@@ -32,10 +32,29 @@
 		ON R.MEMBER_SEQ = M.SEQ
 		WHERE #{id}=ARTICLE_SEQ
 	</select>
-	
-	<delete id="deleteReply" parameterType="int">
+	<select id="selectOne" parameterType="int">
+		SELECT 
+		R.REPLY_SEQ,
+		R.CONTENTS,
+		R.DATE,
+		M.NICKNAME
+		FROM TB_REPLY R
+		INNER JOIN TB_MEMBER M
+		ON R.MEMBER_SEQ = M.SEQ
+		WHERE #{seq}=REPLY_SEQ
+		AND
+		#{article_seq}=ARTICLE_SEQ
+	</select>
+	<delete id="deleteReplies" parameterType="int">
 		DELETE
 		FROM TB_REPLY
-		WHERE SEQ = #{seq}
+		WHERE ARTICLE_SEQ = #{article_seq}
+	</delete>
+	<delete id="deleteReply" parameterType="HashMap">
+		DELETE
+		FROM TB_REPLY
+		WHERE REPLY_SEQ = #{seq} 
+		AND
+		ARTICLE_SEQ = #{article_seq};
 	</delete>
 </mapper>

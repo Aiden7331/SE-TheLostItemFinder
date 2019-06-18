@@ -26,7 +26,7 @@
     		selectOtherMonth: true,
     		changeMonth: true,
     		changeYear : true,
-    		dataFormat: 'yy-mm-dd'
+    		dateFormat: "yy-mm-dd"
     	});
     });
 
@@ -61,13 +61,13 @@
           <div class="page-header">
             <h1>게시물 작성</h1>
           </div>
-			<form method="POST" action="upload">
+			<form method="POST" action="upload" onsubmit="return checkValidate(this)" name="inputgroup">
 	          <table class="table">
 	          	<tr>
 	            	<td><input class="form-control inputtext" type="text" name="title" placeholder="제목을 입력하세요"></td>
 	            </tr>
 	            <tr>
-	            	<td><input class="form-control inputtext" type="text" id="datepicker" placeholder="잃어버린 날짜를 선택하세요."></td>
+	            	<td><input class="form-control inputtext" type="text" id="datepicker" name="date" placeholder="잃어버린 날짜를 선택하세요."></td>
 	            </tr>
 	            <tr>
 	            	<td><input class="form-control inputtext" type="text" name="place" placeholder="잃어버린 장소를 입력하세요"></td>

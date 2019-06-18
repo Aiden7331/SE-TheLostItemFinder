@@ -103,9 +103,5 @@ $(document).ready(function(){
 		      event.preventDefault();
 		      alert("사용하려는 닉네임이 이미 존재합니다.");
 	    }
-	    
-	    else {
-	    	location.href="/TheLostItemFinder/views/success.jsp";
-	    }
 	  });
 });

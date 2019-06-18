@@ -15,7 +15,6 @@
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
-<<<<<<< HEAD
 	<script>
 		var target=null;
 		function give(){
@@ -46,9 +45,7 @@
 			}
 		}
 	</script>
-=======
 	<script src="TheLostItemFinder/js/items.js"></script>
->>>>>>> branch 'master' of https://github.com/Aiden7331/SE-TheLostItemFinder.git
   </head>
 
   <body>
@@ -139,12 +136,6 @@
             <div class="btn-group " >
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 선택<span class="caret"></span>
-              </button>
-              <button type="button" onclick="dup_check()" class="btn btn-info dropdown-toggle" id="add" data-toggle="dropdown" aria-expanded="false">
-                추가<span class="caret"></span>
-              </button>
-              <button type="button" onclick="free(id)" class="btn btn-info dropdown-toggle" id="find" data-toggle="dropdown" aria-expanded="false">
-                찾아주기<span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">제목</a></li>

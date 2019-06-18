@@ -10,6 +10,7 @@
 
 사용 컴포넌트
 1. CKEDITOR
+2. JQUERY UI-Datepicker
 
 사용플랫폼
 

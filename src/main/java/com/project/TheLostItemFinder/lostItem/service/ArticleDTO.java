@@ -11,6 +11,8 @@ public class ArticleDTO {
 	private String CONTENTS;
 	private String PLACE;
 	private String HOLD;
+	private String OFFICE;
+	private String OFFICE_SEQ;
 	private int HITS;
 	private int SEQ;
 	
@@ -88,6 +90,16 @@ public class ArticleDTO {
 	public void setSEQ(int sEQ) {
 		SEQ = sEQ;
 	}
-	
-	
+	public String getOFFICE() {
+		return OFFICE;
+	}
+	public void setOFFICE(String oFFICE) {
+		OFFICE = oFFICE;
+	}
+	public String getOFFICE_SEQ() {
+		return OFFICE_SEQ;
+	}
+	public void setOFFICE_SEQ(String oFFICE_SEQ) {
+		OFFICE_SEQ = oFFICE_SEQ;
+	}
 }

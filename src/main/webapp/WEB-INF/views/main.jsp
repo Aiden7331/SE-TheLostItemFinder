@@ -14,6 +14,18 @@
 
     <title>물건을 찾아줘</title>
 		<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
+	<script>
+	function go(){
+		var session=document.getElementById("on");
+		temp=session.innerHTML;
+		temp=temp.substr(0,3);
+		if(temp=='로그인'){
+			window.location.href="login";
+		}else{
+			window.location.href="upload";
+		}
+	}
+	</script>
   </head>
 
   <body>
@@ -24,11 +36,11 @@
       <!-- Main component for a primary marketing message or call to action -->
 
       <div class="jumbotron">
-        <h2>오늘 찾은 분실물 N개</h2>
+        <h2>오늘 찾은 분실물 ${count}개</h2>
         <p></p>
         <p>
           <!--<a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">분실물 확인하기 &raquo;</a>-->
-          <a class="btn btn-lg btn-primary" href="upload" role="button">분실물 습득 신고하기 &raquo;</a>
+          <a class="btn btn-lg btn-primary" onclick="go()" role="button">분실물 신고하기 &raquo;</a>
         </p>
       </div>
 
@@ -48,37 +60,6 @@
 	          </div>
 	        </div>
         </c:forEach>
-        
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
-            <div class="caption">
-              <h3>분실물 없음</h3>
-              <p>주인을 찾지 못한 분실물이 있다면, 지금 등록하세요!</p>
-              <p><a href="#" class="btn btn-primary disabled" role="button">이동하기</a> </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
-            <div class="caption">
-              <h3>분실물 없음</h3>
-              <p>주인을 찾지 못한 분실물이 있다면, 지금 등록하세요!</p>
-              <p><a href="#" class="btn btn-primary disabled" role="button">이동하기</a> </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
-            <div class="caption">
-              <h3>분실물 없음</h3>
-              <p>주인을 찾지 못한 분실물이 있다면, 지금 등록하세요!</p>
-              <p><a href="#" class="btn btn-primary disabled" role="button">이동하기</a> </p>
-            </div>
-          </div>
-        </div>
 
         <ul class="pager">
           <li class="disabled"><a href="#">이전</a></li>

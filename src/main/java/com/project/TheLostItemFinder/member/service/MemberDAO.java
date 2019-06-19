@@ -2,6 +2,7 @@ package com.project.TheLostItemFinder.member.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -47,18 +48,19 @@ public class MemberDAO {
 		param.put("id", id);
 		return sqlSession.selectOne(namespace+".selectMember",param);
 	}
-	
-	public boolean insertMember(MemberDTO dto){
-		return false;
-	}
-	
-	public boolean updateMember(MemberDTO dto) {
-		return false;
+	public boolean checkDouble(String id) {
 		
+		MemberDTO dto= (MemberDTO)sqlSession.selectOne(namespace+".checkDouble",id);
+		System.out.println("id값:" + id+", list size:"+dto);
+		if(dto!=null) {
+			return false;
+		}
+		return true;
 	}
-	public boolean deleteMember(MemberDTO dtd) {
-		return false;
-		
+	public int insertMember(MemberDTO dto){
+		HashMap<String,MemberDTO> param = new HashMap<String,MemberDTO>();
+		param.put("dto", dto);
+		return sqlSession.insert(namespace+".insertOne",param);
 	}
 	
 	public ArrayList<MemberDTO> selectMember() {

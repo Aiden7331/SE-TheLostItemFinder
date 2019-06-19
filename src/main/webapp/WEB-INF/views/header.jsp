@@ -31,10 +31,10 @@
             <ul class="nav navbar-nav navbar-right">
              <c:choose>
               <c:when test="${empty sessionScope.user}">
-               <li><a href="login">로그인 <span class="sr-only">(current)</span></a></li>
+               <li><a id="on" href="login">로그인 <span class="sr-only">(current)</span></a></li>
               </c:when>
               <c:when test="${not empty sessionScope.user}">
-               <li><a href="javascript:logout()">로그아웃 <span class="sr-only">(current)</span></a></li>
+               <li><a id="on" href="javascript:logout()">로그아웃 <span class="sr-only">(current)</span></a></li>
               </c:when>
              </c:choose>
             </ul>

@@ -15,37 +15,7 @@
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
-	<script>
-		var target=null;
-		function give(){
-			var seq = document.getElementsByName("seq");
-			for(var i=0; i<seq.length; i++){
-				if(seq[i].checked==true){
-					target=seq[i].value;
-					break;
-				}
-			}
-			if(target==null){
-				alert("찾아줄 물건을 선택하세요.");
-				return ;
-			}
-			var option = "scrollbars=no,"
-						+"fullscreen=no,"
-						+"location=no,"
-						+"status=no,"
-						+"toolbar=no,"
-						+"resizeale=no,"
-						+"width=500,"
-						+"height=500";
-			var modal = window.open("find_result",target,option);
-		}
-		function drop(){
-			if(confirm("정말 선택한 물건을 폐기하겠습니까?")){
-				//TODO: 폐기 코드 작성.
-			}
-		}
-	</script>
-	<script src="TheLostItemFinder/js/items.js"></script>
+	<script src="/TheLostItemFinder/js/items.js"></script>
   </head>
 
   <body>

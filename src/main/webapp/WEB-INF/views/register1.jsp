@@ -16,8 +16,7 @@
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
-	<script src="/TheLostItemFinder/js/terms.js"></script>
-	<script src="/TheLostItemFinder/Js/register1.js"></script>
+	<script src="/TheLostItemFinder/js/register.js"></script>
   </head>
 
   <body>
@@ -47,52 +46,45 @@
         <div class="page-header">
         <h1>회원정보 입력</h1>
       </div>
-     <form class="form-horizontal">
+     <form class="form-horizontal" action="registerMember" method="POST" onsubmit="return sending(this)">
 	  <div class="form-group form-inline">
 	    <label class="col-sm-2 control-label">ID</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="inputID" placeholder="사용할 ID를 입력해주세요.">
-	      <button class="btn btn-primary" onclick="checkDouble()">중복확인</button>
-	      <label class="col-sm-2 control-label" id="idcheckresult"></label>
+	      <input type="text" class="form-control" id="id" name="id" placeholder="사용할 ID를 입력해주세요.">
+	      <input type="button" class="btn btn-primary" onclick="checkDouble()" value="중복확인">
 		</div>
-	    <p id="notice"></p>
 	  </div>
+	    <p id="notice"></p>
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">Password</label>
 	    <div class="col-sm-10">
-	      <input type="password" class="form-control" id="pw" placeholder="Password">
+	      <input type="password" class="form-control" id="pw" name="pw" placeholder="Password">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">Password 확인</label>
 	    <div class="col-sm-10">
-	      <input type="password" class="form-control" id="pw_check" placeholder="Password">
-	      <label class="col-sm-2 control-label" id="passwdcheckresult"></label>
+	      <input type="password" class="form-control" id="pw_check" onkeyup="keydown(this)" placeholder="Password">
 	    </div>
 	  </div>
-	 
+	    <p id="keydown"></p>
+	  
 	  <div class="form-group">
 		<label class="col-sm-2 control-label">전화번호</label>
 		 <div class="col-sm-2">
-		  <input type="tel" class="form-control" id="inputPassword3" placeholder="전화번호를 입력해주세요.">
-	   </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">학번/교직원번호</label>
-      <div class="col-sm-10">
-        <input type="input" class="form-control" placeholder="학번 또는 교직원번호를 입력해주세요.">
-        </div>
+		  <input type="tel" class="form-control" id="tel" name="tel" placeholder="전화번호를 입력해주세요.">
+	   	 </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">닉네임</label>
         <div class="col-sm-10">
-          <input type="input" class="form-control" id="nickname" placeholder="사용할 닉네임을 입력해주세요.">
-          <label class="col-sm-2 control-label" id="nicknamecheckresult"></label>
-          </div>
+          <input type="input" class="form-control" id="nickname" name="nickname" placeholder="사용할 닉네임을 입력해주세요.">
         </div>
+      </div>
+      <label class="col-sm-2 control-label" id="nicknamecheckresult"></label>
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-default">제출하기</button>
+	      <input type="submit" class="btn btn-default" value="제출하기" >
 	    </div>
 	  </div>
 	 </form>

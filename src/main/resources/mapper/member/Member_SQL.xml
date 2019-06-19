@@ -10,13 +10,35 @@
 		SELECT NICKNAME FROM TB_MEMBER
 		WHERE ID=#{id}
 	</select>
-	
+	<insert id ="insertOne" parameterType="HashMap">
+		INSERT INTO TB_MEMBER
+		(
+		ID,
+		PASSWORD,
+		NICKNAME,
+		TEL,
+		GRADE)
+		VALUES
+		(
+		#{dto.ID}
+		,#{dto.PW}
+		,#{dto.NICKNAME}
+		,#{dto.TEL}
+		,'MEMBER'
+		)
+	</insert>
 	<select id="selectMember" parameterType="HashMap" resultType="com.project.TheLostItemFinder.member.service.MemberDTO">
 		SELECT 
 		NICKNAME,
 		ID,
 		GRADE,
 		OFFICE_SEQ
+		FROM TB_MEMBER
+		WHERE ID=#{id}
+	</select>
+	
+	<select id="checkDouble" parameterType="String" resultType="com.project.TheLostItemFinder.member.service.MemberDTO">
+		SELECT *
 		FROM TB_MEMBER
 		WHERE ID=#{id}
 	</select>

@@ -46,6 +46,7 @@
 		AND
 		#{article_seq}=ARTICLE_SEQ
 	</select>
+	
 	<delete id="deleteReplies" parameterType="int">
 		DELETE
 		FROM TB_REPLY

@@ -67,7 +67,7 @@
 	            	<td><input class="form-control inputtext" type="text" name="title" placeholder="제목을 입력하세요"></td>
 	            </tr>
 	            <tr>
-	            	<td><input class="form-control inputtext" type="text" id="datepicker" name="date" placeholder="잃어버린 날짜를 선택하세요."></td>
+	            	<td><input class="form-control inputtext" type="text" id="datepicker" name="date_lost" placeholder="잃어버린 날짜를 선택하세요."></td>
 	            </tr>
 	            <tr>
 	            	<td><input class="form-control inputtext" type="text" name="place" placeholder="잃어버린 장소를 입력하세요"></td>

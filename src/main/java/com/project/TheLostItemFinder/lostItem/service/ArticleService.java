@@ -1,5 +1,6 @@
 package com.project.TheLostItemFinder.lostItem.service;
 
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Resource;
 
@@ -40,7 +41,31 @@ public class ArticleService {
 	}
 	
 	public List<ArticleDTO> getThumbnail(){
-		return dao.selectThumbnail();
+		List<ArticleDTO> list = dao.selectThumbnail();
+		ArticleDTO dto;
+		for(int i=0; i<list.size(); i++) {
+			dto=list.get(i);
+			String contents=dto.getCONTENTS();
+			if(contents.contains("<br>")) {
+				contents=contents.replaceAll("<br>", " ");
+				contents=contents.trim();
+			}
+			if(contents.contains("<p>")) {
+				contents=contents.replaceAll("<p>", " ");
+				contents=contents.trim();
+			}
+			if(contents.contains("</p>")) {
+				contents=contents.replaceAll("</p>", " ");
+				contents=contents.trim();
+			}
+			if(contents.length()>20) {
+				contents=contents.substring(0, 20);
+			}
+			dto.setCONTENTS(contents);
+			System.out.println(contents);
+			list.set(i, dto);
+		}
+		return list;
 	}
 	
 	public List<ArticleDTO> getAdminList(int page, int delimit, String office)throws Exception {
@@ -60,7 +85,7 @@ public class ArticleService {
 		
 		return rdao.insertReply(dto);
 	}
-	public boolean addArticle(String title, String type_item, String type_article, String contents, String place, String nickName) {
+	public boolean addArticle(String title, String type_item, String type_article, String contents, String place, String nickName, String date_lost) {
 		ArticleDTO dto=new ArticleDTO();
 		
 		dto.setDATE_UPLOAD(fUtil.date());
@@ -70,6 +95,7 @@ public class ArticleService {
 		dto.setCONTENTS(contents);
 		dto.setPLACE(place);
 		dto.setNICKNAME(nickName);
+		dto.setDATE_LOST(date_lost);
 		dao.insertItem(dto);
 		
 		return true;
@@ -87,4 +113,7 @@ public class ArticleService {
 		return dao.setGiven(name, memo, tel, seq);
 	}
 	
+	public int todayCount() {
+		return dao.todayCount();
+	}
 }

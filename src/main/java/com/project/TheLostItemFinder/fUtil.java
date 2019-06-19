@@ -10,7 +10,14 @@ public class fUtil {
 	public static String date(){
 		Calendar cal= Calendar.getInstance();
 		int month = cal.get(Calendar.MONTH)+1;
-		String date = cal.get(Calendar.YEAR)+"-"+month+"-"+cal.get(Calendar.DATE);
+		String Month;
+		
+		if(month<10) {
+			Month ="0"+month;
+		}else {
+			Month= Integer.toString(month);
+		}
+		String date = cal.get(Calendar.YEAR)+"-"+Month+"-"+cal.get(Calendar.DATE);
 		return date;
 	}
 	

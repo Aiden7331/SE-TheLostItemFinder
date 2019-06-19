@@ -54,11 +54,33 @@ public class MemberController {
 		}
 		return ;
 	}
+
+	@RequestMapping(value="registerMember", method=RequestMethod.POST)
+	public void registerMember(@RequestParam(value="id")String id, @RequestParam(value="pw")String pw,
+			@RequestParam(value="tel")String tel,@RequestParam(value="nickname")String nickname,
+			HttpServletResponse response) throws IOException {
+		
+		if(serv.registerMember(id, pw, tel, nickname)) {
+			response.getWriter().print("{\"messsage\":\"success\"}");
+		}else {
+			response.getWriter().print("{\"messsage\":\"nickname\"}");
+		}
+	}
 	
 	@RequestMapping(value="checkDouble", method=RequestMethod.GET)
-	public String checkDouble() {
-		//TODO 중복확인
-		return "register1";
+	public void checkDouble(@RequestParam(value="id") String id,HttpServletResponse response) {
+		
+		try {
+			if(serv.checkDouble(id)==true){
+				response.getWriter().print("{\"message\":\"true\"}");
+			}else {
+				response.getWriter().print("{\"message\":\"false\"}");	
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@RequestMapping(value="logout",method=RequestMethod.POST)
@@ -77,7 +99,7 @@ public class MemberController {
 			return "register1";
 	}
 	
-	@RequestMapping(value="register-3",method = RequestMethod.POST)
+	@RequestMapping(value="register-3",method = RequestMethod.GET)
 	public String register3(Model model) {
 			return "register2";
 	}

@@ -12,13 +12,20 @@ public class MemberService {
 	@Resource(name = "memberDAO")
 	MemberDAO dao= new MemberDAO();
 	
-	public boolean checkDouble() {
-		//TODO 중복확인
-		return true;
+	public boolean checkDouble(String id) {
+		return dao.checkDouble(id);
 	}
 	
-	public boolean updateMemInfo() {
-		//TODO 사용자 정보 수정
+	public boolean registerMember(String id, String pw, String tel, String nickname) {
+		MemberDTO dto = new MemberDTO();
+		dto.setID(id);
+		dto.setPW(pw);
+		dto.setNICKNAME(nickname);
+		dto.setTEL(tel);
+		if(dao.insertMember(dto)!=1) {
+			return false;
+		}
+		
 		return true;
 	}
 	

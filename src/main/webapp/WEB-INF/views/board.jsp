@@ -45,10 +45,17 @@
 				<td colspan="3" style="text-align:left;">${article.NICKNAME} <font id="date">${article.DATE_UPLOAD} 작성</font> </td><td style="text-align:right;">조회수 ${article.HITS }</td>
 			  </tr>
 			  <tr>
-				<td style="text-align:center; width:15%">잃어버린 장소 </td><td colspan="3" style="text-align:left;"> ${article.PLACE} </td>
+				<td style="text-align:center; width:15%">잃어버린 장소 </td><td style="text-align:left;"> ${article.PLACE} </td>
+				<td style="text-align:center; width:15%">잃어버린 / 찾은 날 </td><td style="text-align:left;"> ${article.DATE_LOST} </td>
 			  </tr>
 			  <tr>
+			  	<c:if test="${article.OFFICE_SEQ eq null}">
 				<td style="text-align:center; width:15%">분실물 종류</td><td colspan="3" style="text-align:left; width:50%">${article.TYPE_ITEM}</td>
+				</c:if>
+			  	<c:if test="${article.OFFICE_SEQ ne null}">
+				<td style="text-align:center; width:15%">분실물 종류</td><td style="text-align:left; width:35%">${article.TYPE_ITEM}</td>
+				<td style="text-align:center; width:15%">보관중인 관리실</td><td style="text-align:left; width:35%">${article.OFFICE}</td>
+				</c:if>
 			  </tr>
 			  <tr>
 				<td colspan="4" style="text-align:left; height:200px" >${article.CONTENTS}</td>

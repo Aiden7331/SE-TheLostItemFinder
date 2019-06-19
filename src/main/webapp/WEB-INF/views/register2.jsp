@@ -47,15 +47,10 @@
       <div class="jumbotron">
         <h2>회원가입이 완료되었습니다.</h2>
         <p>
-          앞으로 물건을 찾아줘 사이트의 모든 시스템을 이용할 수 있습니다.
-          </p>
+          앞으로 물건을 찾아줘 사이트를 이용할 수 있습니다.
+        </p>
+        <input type="button" class="btn btn-success" onclick="window.location.href='/TheLostItemFinder/'" value="홈으로 이동하기"></input>
         </div>
-        <div id="result">
-          <button type="submit" class="btn btn-default">제출하기</button>
-          </div>
-     <div class="text-center">
-        하단 문구 작성
-     </div>
     </div> <!-- /container -->
 
 

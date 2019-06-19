@@ -17,7 +17,7 @@
 		VALUES
 		(#{article.TYPE_ITEM},
 		#{article.TYPE_ARTICLE},
-		"test",
+		#{article.DATE_LOST},
 		#{article.DATE_UPLOAD},
 		"0",
 		#{article.PLACE},
@@ -207,10 +207,14 @@
 		A.TITLE,
 		A.CONTENTS,
 		A.IMAGE,
-		A.HITS
-		FROM TB_ARTICLE A
-		INNER JOIN TB_MEMBER M
+		A.HITS,
+		O.NAME AS 'OFFICE',
+		A.OFFICE_SEQ
+		FROM TB_MEMBER M
+		RIGHT OUTER JOIN TB_ARTICLE A
 		ON A.MEMBER_SEQ = M.SEQ
+		LEFT OUTER JOIN TB_OFFICE O
+		ON A.OFFICE_SEQ = O.SEQ
 		WHERE A.SEQ=#{seq}
 	</select>
 	<delete id="deleteArticle" parameterType="int">
@@ -233,10 +237,24 @@
 	<update id="setGiven" parameterType="HashMap">
 		UPDATE TB_ARTICLE
 		SET
+		HOLD=1,
+		OFFICE_SEQ=NULL,
 		NAME_EXPIRE=#{name},
 		DATE_EXPIRE=#{date},
 		TEL_EXPIRE=#{tel},
 		MEMO_EXPIRE=#{memo}
 		WHERE SEQ=#{seq}
 	</update>
+	
+	<select id="todayCount" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
+		SELECT
+		SEQ
+		FROM
+		TB_ARTICLE
+		WHERE
+		DATE_UPLOAD=(
+		SELECT
+		DATE_FORMAT(NOW(),'%Y-%m-%d')
+		);				
+	</select>
 </mapper>

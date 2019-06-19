@@ -27,6 +27,9 @@ public class MainController {
 	@RequestMapping(value="/main/", method=RequestMethod.GET)
 	public String Main(Model model) {
 		List<ArticleDTO> list=serv.getThumbnail();
+		int count=0;
+		count=serv.todayCount();
+		model.addAttribute("count",count);
 		model.addAttribute("list",list);
 		return "main";
 	}

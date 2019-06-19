@@ -112,11 +112,14 @@ public class ArticleDAOImpl implements ArticleDAO{
 		param.put("tel", tel);
 		param.put("seq", seq);
 		param.put("date",fUtil.date());
-		if(sqlSession.update(namespace+"setGiven",param)!=1) {
+		if(sqlSession.update(namespace+".setGiven",param)!=1) {
 			return false;
 		}
-		
 		return true;
 	}
-
+	public int todayCount() {
+		List<ArticleDTO> list=sqlSession.selectList(namespace+".todayCount");
+		System.out.println(list.size());
+		return list.size();
+	}
 }

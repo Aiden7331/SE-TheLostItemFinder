@@ -25,11 +25,27 @@ window.onload=function(){
 	<h3> 찾는 사람 정보 입력 </h3>
 	<form action="setgiven" method="GET">
 		<input id="seq" name="seq" type="hidden">
-		이름 <input name="name" type="text"><br>
-		전화번호<input name="tel" type="tel"><br>
-		메모<br>
-		<textarea name="memo" rows="10"></textarea><br>
+		<div class="form-group">
+	    <label class="col-sm-2 control-label">이름</label>
+	    <div class="col-sm-10">
+	    	 <input class="form-control" name="name" type="text">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">전화번호</label>
+	    <div class="col-sm-10">
+			<input class="form-control" name="tel" type="tel">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">메모</label>
+	    <div class="col-sm-10">
+		<textarea class="form-control" name="memo" rows="10"></textarea>
+	    </div>
+	  </div>
+	  <div class="form-group" style="text-align:right;">
 		<input class="btn btn-success" type="submit" value="작성완료" >
+	  </div>
 	</form>
 </body>
 </html>

@@ -63,6 +63,7 @@ var nickcheck=false;
 		  pw.focus();
 		  return false;
 	  }
+	  alert("실행확인");
 		$.ajax({
 			url: $(form).attr('action'),
 			dataType:"json",

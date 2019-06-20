@@ -25,7 +25,7 @@
             <ul class="nav navbar-nav">
               <li><a href="board">들어온 분실물 </a></li>
               <c:if test="${sessionScope.user.GRADE eq 'ADMIN'}">
-               <li><a href="items">보관중</a></li>
+               <li><a href="items">관리실</a></li>
               </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">

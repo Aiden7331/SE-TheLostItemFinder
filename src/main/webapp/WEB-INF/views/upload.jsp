@@ -75,11 +75,16 @@
 	            <tr>
 	            	<td>
 	            		<input class="form-control" style="width:50%" type="text" name="type_item" placeholder="분실물 종류를 입력하세요">
+	            		
+	            	</td>
+	            </tr>
+	            <tr>
+	            	<td>
 	            		<select style="width:30%" name="type_article">
 	            			<option value="물건 찾는글">물건 찾아요</option>
 	            			<option value="주인 찾는글">주인 찾아요</option>
 	            		</select>
-	            		</td>
+	            	</td>
 	            </tr>
 	            <tr>
 	            	<td>이미지 첨부하기 <input type="file" class="btn btn-default" id="image" name="fileData"></td>

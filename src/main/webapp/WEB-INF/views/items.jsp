@@ -32,7 +32,7 @@
           </div>
           <div class="col-xs-12 col-md-10">
             <div class="page-header">
-              <h1>관리실 보관 물품</h1>
+              <h1>관리실 보관 물품 - ${sessionScope.office}</h1>
             </div>
 			<!-- Single button -->
             <div  style="text-align:right">

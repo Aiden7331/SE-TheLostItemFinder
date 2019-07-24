@@ -1,11 +1,22 @@
-CKEDITOR.editorConfig=function(config){
-	config.language='ko';
-	config.font_names='맑은 고딕; 돋움; 바탕; 돋음; 궁서;'+CKEDITOR.config.font_names;
-	config.enterMode=CKEDITOR.ENTER_BR;
-	config.docType="<!DOCTYPE html>";
-	config.filebrowserFlashUploadUrl='imageup';
-	config.filebrowserImageUploadUrl='imageup';
-	config.removePlugins='save';
+var ckeditor_config={
+		resize_enable:false,
+		enterMode:CKEDITOR.ENTER_BR,
+		shiftEnterMode:CKEDITOR.ENTER_P,
+		tollbarCanCollapse:true,
+		removePlugins:"elementspath",
+		filebrowserUploadUrl:'/TheLostItemFinder/file_upload',
+			
+			// 에디터에 사용할 기능들 정의 
+		toolbar : [ 
+			[ 'Source', '-' , 'NewPage', 'Preview' ], 
+			[ 'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo' ], 
+			[ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'], 
+			[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ], 
+			'/', 
+			[ 'Styles', 'Format', 'Font', 'FontSize' ], 
+			[ 'TextColor', 'BGColor' ], 
+			[ 'Image', 'Flash', 'Table' , 'SpecialChar' , 'Link', 'Unlink'] 
+		]
 }
 
 function checkValidate(frm) {

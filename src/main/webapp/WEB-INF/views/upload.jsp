@@ -15,7 +15,7 @@
 
     <title>물건을 찾아줘</title>
     <jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
-    <script src="//cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+    <script src="/TheLostItemFinder/resources/ckeditor/ckeditor.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/TheLostItemFinder/js/upload.js"></script>
@@ -93,7 +93,7 @@
 					<td><textarea name="contents" id="editor" rows="10" cols="80" placeholder="내용을 입력하세요"> </textarea></td>
 					
     				<script>
-     				 CKEDITOR.replace('editor');
+     				 CKEDITOR.replace('editor',ckeditor_config);
     				</script>
 				</tr>
 	          </table>

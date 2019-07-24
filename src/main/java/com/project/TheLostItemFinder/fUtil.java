@@ -1,10 +1,10 @@
 package com.project.TheLostItemFinder;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.util.Calendar;
-import java.util.UUID;
-
-import org.apache.commons.fileupload.FileItem;
-import org.springframework.util.FileCopyUtils;
 
 public class fUtil {
 	public static String date(){
@@ -21,4 +21,15 @@ public class fUtil {
 		return date;
 	}
 	
+	public static String PathEncoding(String str) throws UnsupportedEncodingException {
+		byte[] bytes=str.getBytes();
+		CharBuffer cbuffer = CharBuffer.wrap((new String(bytes, "EUC-KR")).toCharArray());
+		Charset utf8charset = Charset.forName("UTF-8");
+		ByteBuffer bbuffer = utf8charset.encode(cbuffer);
+
+		String tmpDecode = new String(bbuffer.array());
+		tmpDecode.replaceAll(" ", "_");
+		System.out.println(tmpDecode);
+		return tmpDecode;
+	}
 }

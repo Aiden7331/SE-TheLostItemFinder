@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.TheLostItemFinder.FileBean;
+import com.project.TheLostItemFinder.fUtil;
 import com.project.TheLostItemFinder.lostItem.service.ArticleDAOImpl;
 import com.project.TheLostItemFinder.lostItem.service.ArticleDTO;
 import com.project.TheLostItemFinder.lostItem.service.ArticleService;
@@ -158,6 +162,43 @@ public class LostItemController {
 			e.printStackTrace();
 		}
 		
+	}
+	/*
+	 * 기능: 파일 업로드
+	 * 한글 파일, 공백문자가 입력될 경우 fUtil클래스 PathEncoding함수로 utf8로 인코딩 후 문자열 반환.
+	 * 
+	 */
+	@RequestMapping(value="file_upload",method=RequestMethod.POST)
+	public String procFileUpload(FileBean fileBean, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String root_path = session.getServletContext().getRealPath("/"); //웹 서비스 ROOT경로
+		String attach_path = "resources/files/attach/";
+		
+		MultipartFile upload = fileBean.getUpload();
+		String filename="";
+		String CKEditorFuncNum="";
+		if(upload!=null) {
+			try {
+				filename = fUtil.PathEncoding(filename);
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+			
+			filename=upload.getOriginalFilename();
+			fileBean.setFilename(filename);
+			CKEditorFuncNum = fileBean.getCKEditorFuncNum();
+			try {
+				File file = new File(root_path+attach_path+filename);
+				upload.transferTo(file);
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		String file_path="/TheLostItemFinder/"+attach_path + filename;
+		model.addAttribute("file_path",file_path);
+		model.addAttribute("CKEditorFuncNum",CKEditorFuncNum);
+		
+		return "upImages/fileupload";
 	}
 	
 	@RequestMapping(value = "upload", method=RequestMethod.POST)

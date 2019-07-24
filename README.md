@@ -22,3 +22,6 @@
 
 1. Apache Tomcat
 2. MYSQL DATABASE
+
+## ER-Diagram
+![image](https://user-images.githubusercontent.com/45892592/61765878-ce4bcb80-ae19-11e9-8729-7195054757a2.jpeg)

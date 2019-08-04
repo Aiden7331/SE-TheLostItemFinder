@@ -12,10 +12,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
+	<link type="text/css" rel="stylesheet" href="/TheLostItemFinder/css/board.css">
 
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
 	<script src="/TheLostItemFinder/js/items.js"></script>
+	<script>
+	$(function () {
+	    $('[data-toggle="dropdown"]').dropdown()
+	    })    
+	</script>
   </head>
 
   <body>
@@ -32,7 +38,10 @@
           </div>
           <div class="col-xs-12 col-md-10">
             <div class="page-header">
-              <h1>관리실 보관 물품 - ${sessionScope.office}</h1>
+              <h1>관리실 보관 물품 - ${sessionScope.office}
+              <span class="glyphicon glyphicon-info-sign" onclick="showOffice('${sessionScope.office_seq}')"></span>
+              
+              </h1>
             </div>
 			<!-- Single button -->
             <div  style="text-align:right">
@@ -40,32 +49,35 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   보기 <span class="caret"></span>
                 </button>
+                <input type="hidden" id="limit" value="${limit}">
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">최신순</a></li>
-                  <li><a href="#">추가예정</a></li>
-                  <li><a href="#">추가예정</a></li>
+                  <li><a href="#">보관중인 물건</a></li>
+                  <li><a href="#">돌려준 물건</a></li>
+                  <li><a href="#">폐기된 물건</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">추가예정</a></li>
+                  <li><a onclick="divide(5)">5개씩 보기</a></li>
+                  <li><a onclick="divide(10)">10개씩 보기</a></li>
+                  <li><a onclick="divide(15)">15개씩 보기</a></li>
                 </ul>
               </div>
             </div>
             <p></p>
             <table class="table table-hover text-center">
-              <tr class="info">
-              	<th style="width:7%; text-align:center;"><b>체크</b></th>
-                <th style="width:7%; text-align:center;"><b>글 번호</b></th>
-                <th style="width:15%; text-align:center;"><b>물건 종류</b></th>
-                <th style="width:21%; text-align:center;"><b>물건 사진</b></th>
-                <th style="width:20%; text-align:center;"><b>발견한 곳</b></th>
-                <th style="width:10%; text-align:center;"><b>발견 날짜</b></th>
-                <th style="width:10%; text-align:center;"><b>업로드 날짜</b></th>
+              <tr class="header-style">
+              	<th style="width:7%; text-align:center; color:#FFFFFF;"><b>체크</b></th>
+                <th style="width:7%; text-align:center; color:#FFFFFF;"><b>글 번호</b></th>
+                <th style="width:15%; text-align:center; color:#FFFFFF;"><b>물건 종류</b></th>
+                <th style="width:21%; text-align:center; color:#FFFFFF;"><b>물건 사진</b></th>
+                <th style="width:20%; text-align:center; color:#FFFFFF;"><b>발견한 곳</b></th>
+                <th style="width:10%; text-align:center; color:#FFFFFF;"><b>발견 날짜</b></th>
+                <th style="width:10%; text-align:center; color:#FFFFFF;"><b>업로드 날짜</b></th>
               </tr>
               <c:forEach var="article" items="${list}">
               <tr>
               	<td><input type="radio" name="seq" value="${article.SEQ}"></td>
                 <td style="text-align:center">${article.SEQ}</td>
                 <td>${article.TYPE_ITEM}</td>
-                <td><img src="/TheLostItemFinder/site-image/main_image.png" alt="클릭하면 게시물로 이동합니다." width="40%"></td>
+                <td><img src="${article.IMAGE}" alt="클릭하면 게시물로 이동합니다." width="40%"></td>
                 <td>${article.PLACE}</td>
                 <td>${article.DATE_LOST}</td>
                 <td>${article.DATE_UPLOAD}</td>
@@ -76,27 +88,15 @@
         </div>
         <div style="text-align:right;">
         	<input type="button" class="btn btn-info" value="찾아주기" onclick='give()'>
-        	<input type="button" class="btn btn-warning" value="보관취소" onclick="cencel()">
+        	<input type="button" class="btn btn-warning" value="보관취소" onclick="cancel()">
         	<input type="button" class="btn btn-danger" value="폐기" onclick='drop()'>
+        	<input type="hidden" id="officeName" value="${sessionScope.office}">
+        	<input type="hidden" id="adminName" value="${sessionScope.user.NICKNAME}">
         </div>
 
         <nav style="text-align:center">
-          <ul class="pagination pagination-sm">
-            <li>
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+         <input type="hidden" id="page" value="${page}">
+          <ul id="pages" class="pagination pagination-sm">
           </ul>
         </nav>
       <!-- 그림 이미지 버튼입니다 -->

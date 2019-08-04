@@ -19,11 +19,11 @@
 		#{article.TYPE_ARTICLE},
 		#{article.DATE_LOST},
 		#{article.DATE_UPLOAD},
-		"0",
+		'NONE',
 		#{article.PLACE},
 		#{article.TITLE},
 		#{article.CONTENTS},
-		"test",
+		#{article.IMAGE},
 		(SELECT SEQ FROM TB_MEMBER
 		WHERE NICKNAME=#{article.NICKNAME})
 		)
@@ -165,6 +165,16 @@
 		OFFSET #{page}
 	</select>
 	
+	<select id="getTotalMainPage" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM TB_MEMBER M
+		INNER JOIN TB_ARTICLE A
+		ON M.SEQ=A.MEMBER_SEQ
+		WHERE A.OFFICE_SEQ IS NOT NULL
+		ORDER BY A.SEQ DESC
+	</select>
+	
 	<select id= "selectAdmin" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO" parameterType="HashMap">
 		SELECT
 		A.SEQ, 
@@ -194,6 +204,16 @@
 		COUNT(*)
 		FROM TB_ARTICLE;
 	</select>
+	<select id="selectPageByAdmin" parameterType="String" resultType="int">
+		SELECT 
+		COUNT(*)
+		FROM TB_ARTICLE A
+		INNER JOIN TB_OFFICE O
+		ON A.OFFICE_SEQ = O.SEQ
+		WHERE
+		O.NAME = #{officeName};
+	</select>
+	
 	<select id ="selectOne" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
 		SELECT
 		A.SEQ, 
@@ -225,7 +245,9 @@
 	</delete>
 	<update id="setOffice" parameterType="HashMap">
 		UPDATE TB_ARTICLE
-		SET OFFICE_SEQ=
+		SET 
+		HOLD='HOLD',
+		OFFICE_SEQ=
 		(SELECT 
 		SEQ
 		FROM TB_OFFICE
@@ -237,7 +259,7 @@
 	<update id="setGiven" parameterType="HashMap">
 		UPDATE TB_ARTICLE
 		SET
-		HOLD=1,
+		HOLD='GIVEBACK',
 		OFFICE_SEQ=NULL,
 		NAME_EXPIRE=#{name},
 		DATE_EXPIRE=#{date},
@@ -245,7 +267,24 @@
 		MEMO_EXPIRE=#{memo}
 		WHERE SEQ=#{seq}
 	</update>
-	
+	<update id="setDiscard" parameterType="HashMap">
+		UPDATE TB_ARTICLE
+		SET
+		HOLD='DISCARD',
+		OFFICE_SEQ=NULL,
+		NAME_EXPIRE=#{admin},
+		DATE_EXPIRE=now(),
+		MEMO_EXPIRE='폐기',
+		OFFICE_EXPIRE=#{office}
+		WHERE SEQ=#{seq}
+	</update>
+	<update id="cancelProperty" parameterType="HashMap">
+		UPDATE TB_ARTICLE
+		SET
+		OFFICE_SEQ=NULL
+		HOLD='NONE'
+		WHERE SEQ=#{seq}
+	</update>
 	<select id="todayCount" resultType="com.project.TheLostItemFinder.lostItem.service.ArticleDTO">
 		SELECT
 		SEQ
@@ -257,4 +296,6 @@
 		DATE_FORMAT(NOW(),'%Y-%m-%d')
 		);				
 	</select>
+	
+	
 </mapper>

@@ -15,6 +15,51 @@
     <title>물건을 찾아줘</title>
 		<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>
 	<script>
+	window.onload=function(){
+		var page = document.getElementById("page").value;
+		var totalPage = document.getElementById("totalPage").value;
+		var pager = document.getElementById("pager");
+		page = parseInt(page);
+		totalPage=parseInt(totalPage);
+		if(page==1){
+			pager.innerHTML += "<li class='disabled'><a>이전</a></li>";
+		}else{
+			pager.innerHTML += "<li class='active'><a onclick='prevPage(" + page + ")'>이전</a></li>";
+		}
+		if(page==totalPage){
+			pager.innerHTML += "<li class='disabled'><a>다음</a></li>";
+		}else{
+			pager.innerHTML += "<li class='active'><a onclick='nextPage(" + page+ ")'>다음</a></li>";	
+		}
+		
+	}
+	
+	function prevPage(page){
+		page--;
+		editGET('page',page);
+	}
+	function nextPage(page){
+		page++;
+		editGET('page',page);
+	}
+
+	function editGET(key,val){
+		var url = window.location.href;
+		if(url.indexOf('?')==-1){
+			location.href = url+"?" + key + "="+val;
+		}else if(url.indexOf(key+'=')==-1){
+			location.href = url+"&"+key+"="+val;
+		}else{
+			var fragment= url.split(key+'=');
+			if(fragment[1].indexOf('&')==-1){
+				location.href = fragment[0] + key+'='+val;
+			}else{
+				var back = fragment[1].split('&');
+				location.href = fragment[0]+key+'='+val+'&'+back[1];
+			}
+		}
+	}
+	
 	function go(){
 		var session=document.getElementById("on");
 		temp=session.innerHTML;
@@ -47,11 +92,11 @@
       <!-- 그림 이미지 버튼입니다 -->
       <div class="row container">
         <h3>관리실 보유중인 분실물</h3>
-        
-        <c:forEach var="article" items="${list}">
+        <div class="row">
+        <c:forEach var="article" varStatus="status" items="${list}">
 	        <div class="col-sm-6 col-md-4">
 	          <div class="thumbnail">
-	            <img src="/TheLostItemFinder/site-image/main_image.png" alt="...">
+	            <img src="${article.IMAGE }" height="250px" style="max-height:250px; width:auto;" alt="...">
 	            <div class="caption">
 	              <h3>${article.TITLE}</h3>
 	              <p>${article.CONTENTS}<span class="label label-success">New</span></p>
@@ -59,14 +104,17 @@
 	            </div>
 	          </div>
 	        </div>
+	     <c:if test="${status.index eq 2}">
+	     </div>
+	     <div class="row">
+	     </c:if>
         </c:forEach>
-
-        <ul class="pager">
-          <li class="disabled"><a href="#">이전</a></li>
-          <li class="disabled"><a href="#">다음</a></li>
-        </ul>
-        </nav>
+		  </div>
       </div>
+      <input type="hidden" id="totalPage" value="${totalPage}">
+      <input type="hidden" id="page" value="${page}">
+      <ul id="pager" class="pager">
+      </ul>
 
     </div> <!-- /container -->
 

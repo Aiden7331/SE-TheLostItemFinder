@@ -5,6 +5,11 @@
 <!-- Bootstrap core CSS -->
 <link href="/TheLostItemFinder/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- bootstrap javacript & JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/TheLostItemFinder/js/bootstrap.min.js"></script>
+
+
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="/TheLostItemFinder/assets/js/ie-emulation-modes-warning.js"></script>

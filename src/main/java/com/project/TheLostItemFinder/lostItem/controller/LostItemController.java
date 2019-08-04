@@ -28,6 +28,8 @@ import com.project.TheLostItemFinder.fUtil;
 import com.project.TheLostItemFinder.lostItem.service.ArticleDAOImpl;
 import com.project.TheLostItemFinder.lostItem.service.ArticleDTO;
 import com.project.TheLostItemFinder.lostItem.service.ArticleService;
+import com.project.TheLostItemFinder.lostItem.service.OfficeDTO;
+import com.project.TheLostItemFinder.lostItem.service.OfficeService;
 import com.project.TheLostItemFinder.lostItem.service.ReplyDTO;
 import com.project.TheLostItemFinder.member.service.MemberDTO;
 
@@ -41,20 +43,34 @@ public class LostItemController {
 	@Resource(name="articleService")
 	ArticleService serv= new ArticleService();
 	
+	@Resource(name="officeService")
+	OfficeService oserv= new OfficeService();
+	
+	final int DEFAULT_LIMIT=10;
+	final int DEFAULT_PAGE=1;
+	
 	@RequestMapping(value = "board", method=RequestMethod.GET)
 	public String findItem(Model model, @RequestParam(value="id", required=false) Integer id, 
 			@RequestParam(value="searchType",required=false) String searchType,
 			@RequestParam(value="search",required=false) String search,
-			@RequestParam(value="limit", required=false) Integer limit) throws Exception {
+			@RequestParam(value="limit", required=false) Integer limit,
+			@RequestParam(value="page",required=false) Integer page) throws Exception {
+		
 		ArticleDTO dto = null;
 		List<ReplyDTO> rlist = null;
 		/*게시물 출력*/
 		if(id!=null && (dto=serv.getArticle(id))!=null) {
-			System.out.println("Having article :"+dto);
 			model.addAttribute("article",dto);
 			model.addAttribute("isArticle",true);
 			rlist=serv.getReply(id);
 			model.addAttribute("replies",rlist);
+			if(dto.getHOLD().equals("HOLD")||dto.getHOLD().equals("GIVEBACK")||dto.getHOLD().equals("DISCARD")) {
+				if(dto.getOFFICE_SEQ()!=null){
+					OfficeDTO odto = oserv.getOneOffice(Integer.parseInt(dto.getOFFICE_SEQ()));
+					model.addAttribute("infoOffice",odto);
+				}
+			}
+			System.out.println("LostItemController findItem : "+dto.getHOLD()+"/");
 		}else {
 			model.addAttribute("isArticle",false);
 		}
@@ -62,16 +78,21 @@ public class LostItemController {
 		
 		/*게시판 목록 출력*/
 		if(limit==null) {
-			limit=10;
+			limit = DEFAULT_LIMIT;
 		}
+		if(page == null) {
+			page = DEFAULT_PAGE;
+		}
+		model.addAttribute("limit",limit);
+		
 		if(searchType==null) {
-			list = serv.getList(0, limit);
+			list = serv.getList(page, limit);
 		}else {
-			list = serv.getList(0, 0, searchType, search);	
+			list = serv.getList(page, limit, searchType, search);	
 		}
 		
 		if(list!=null) {
-			model.addAttribute("page", 1);
+			model.addAttribute("page", page);
 			model.addAttribute("list", list);
 		}else {
 			return "400_page";
@@ -99,7 +120,8 @@ public class LostItemController {
 			@RequestParam(value="id", required=true) Integer id, Model model,
 			@RequestParam(value="searchType",required=false) String searchType,
 			@RequestParam(value="search",required=false) String search,
-			@RequestParam(value="limit", required=false) Integer limit) throws Exception {
+			@RequestParam(value="limit", required=false) Integer limit,
+			@RequestParam(value="page",required=false) Integer page) throws Exception {
 		
 		System.out.println("received reply request");
 		serv.addReply(id, contents, nickname);
@@ -120,16 +142,20 @@ public class LostItemController {
 		
 		/*게시판 목록 출력*/
 		if(limit==null) {
-			limit=10;
+			limit = DEFAULT_LIMIT;
 		}
+		if(page == null) {
+			page = DEFAULT_PAGE;
+		}
+		model.addAttribute("limit",limit);
 		if(searchType==null) {
-			list = serv.getList(0, limit);
+			list = serv.getList(page, limit);
 		}else {
-			list = serv.getList(0, 0, searchType, search);	
+			list = serv.getList(page, 0, searchType, search);	
 		}
 		
 		if(list!=null) {
-			model.addAttribute("page", 1);
+			model.addAttribute("page", page);
 			model.addAttribute("list", list);
 		}else {
 			return "400_page";
@@ -143,25 +169,6 @@ public class LostItemController {
 		
 		
 		return "upload";
-	}
-	
-	@RequestMapping(value="imageup")
-	public void ImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) {
-		String filename = upload.getOriginalFilename();
-		String path="C:\\IMAGE_DATA"+filename;
-		byte[] bytes;
-		OutputStream out = null;
-		try {
-			bytes = upload.getBytes();
-			out = new FileOutputStream(new File(path));
-			out.write(bytes);
-			
-			String callback=request.getParameter("CKEditorFuncNum");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 	/*
 	 * 기능: 파일 업로드
@@ -205,9 +212,12 @@ public class LostItemController {
 	public String write(Model model, @RequestParam("title") String title, @RequestParam("contents") String contents,
 						@RequestParam("date_lost") String date_lost,
 						@RequestParam("type_item") String type_item, @RequestParam("type_article") String type_article,
-						@RequestParam("place") String place, @RequestParam("nickname") String nickName) throws Exception {
-		
-		serv.addArticle(title, type_item, type_article, contents, place, nickName, date_lost);
+						@RequestParam("place") String place, @RequestParam("nickname") String nickName,
+						@RequestParam(value="image",required=false) String image) throws Exception {
+		if(image==null) {
+			image= "/TheLostItemFinder/site-image/main_image.png";
+		}
+		serv.addArticle(title, type_item, type_article, contents, place, nickName, date_lost, image);
 		
 		return "relocation";
 	}
@@ -227,7 +237,10 @@ public class LostItemController {
 		
 		return "board";
 	}
-	
+	/*
+	 * 기능 : 뎃글 삭제
+	 * 
+	 */
 	@RequestMapping(value="deletereply", method=RequestMethod.GET)
 	public String deleteReply(Model model,@RequestParam(value="seq") int seq, @RequestParam(value="aseq") int article_seq, HttpServletRequest request) {
 		HttpSession session=request.getSession();
@@ -237,8 +250,9 @@ public class LostItemController {
 		
 		MemberDTO mdto = (MemberDTO)session.getAttribute("user");
 		ReplyDTO rdto = serv.getAReply(seq,article_seq);
-		
+		System.out.println("deletereply:"+mdto.getNICKNAME()+", "+rdto.getNICKNAME());
 		if(mdto.getNICKNAME().equals(rdto.getNICKNAME())) {
+			System.out.println("deletereply: execution deleteReply at serv object");
 			serv.deleteReply(seq,article_seq);
 		}
 		
@@ -267,5 +281,6 @@ public class LostItemController {
 		
 		return "board";
 	}
+	
 	
 }

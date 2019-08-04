@@ -38,8 +38,8 @@ public class MemberController {
 			//session.isNew() 세션이 새로운 것인지?
 			session.setAttribute("user", member);
 			/* 관리자의 경우에 OFFICE 등록 */
-			System.out.println("Office SEQ :"+member.getOFFICE_SEQ());
 			if(member.getOFFICE_SEQ()!=null) {
+				session.setAttribute("office_seq", member.getOFFICE_SEQ());
 				session.setAttribute("office", serv.getOffice(member.getOFFICE_SEQ()));
 			}
 			login="{\"message\":\"true\"}";

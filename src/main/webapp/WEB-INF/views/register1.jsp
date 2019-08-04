@@ -50,11 +50,11 @@
 	  <div class="form-group form-inline">
 	    <label class="col-sm-2 control-label">ID</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="id" name="id" placeholder="사용할 ID를 입력해주세요.">
+	      <input type="text" class="form-control" id="id" name="id" placeholder="사용할 ID를 입력해주세요." maxlength='15' onkeyup="checkAlphaNum(this)">
 	      <input type="button" class="btn btn-primary" onclick="checkDouble()" value="중복확인">
+	    	<p id="notice">ID는 영문 소문자 및 숫자를 조합해서 15자 까지 입력할 수 있습니다.</p>
 		</div>
 	  </div>
-	    <p id="notice"></p>
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">Password</label>
 	    <div class="col-sm-10">
@@ -65,9 +65,9 @@
 	    <label class="col-sm-2 control-label">Password 확인</label>
 	    <div class="col-sm-10">
 	      <input type="password" class="form-control" id="pw_check" onkeyup="keydown(this)" placeholder="Password">
+	    <p id="keydown"></p>
 	    </div>
 	  </div>
-	    <p id="keydown"></p>
 	  
 	  <div class="form-group">
 		<label class="col-sm-2 control-label">전화번호</label>

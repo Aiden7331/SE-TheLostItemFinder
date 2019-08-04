@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-window.parent.CKEDITOR.tools.callFunction('${CKEditorFuncNum}','${file_path}','파일 전송 완료');
+	sessionStorage.setItem('file_path','${file_path}');
+	window.parent.CKEDITOR.tools.callFunction('${CKEditorFuncNum}','${file_path}','파일 전송 완료');	
 </script>
 </head>
 <body>

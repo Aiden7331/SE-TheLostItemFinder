@@ -1,3 +1,5 @@
+var directInput=false;
+
 var ckeditor_config={
 		resize_enable:false,
 		enterMode:CKEDITOR.ENTER_BR,
@@ -19,33 +21,30 @@ var ckeditor_config={
 		]
 }
 
+function selectType(select){
+	var inputForm = document.getElementById("inputForm");
+	
+	if(select.value=='직접입력'){
+		directInput = true;
+		inputForm.innerHTML="<input class='form-control' style='width:50%' type='text' name='type_item' placeholder='직접 입력'>";
+		return ;
+	}else if(directInput){
+		directInput = false;
+	}
+	inputForm.innerHTML="<input type='hidden' name='type_item' value='"+select.value+"'>";
+}
+
 function checkValidate(frm) {
-	if(frm.title.value=="") {
-		alert("제목을 입력해주세요.");
-		frm.title.focus();
-		return false;
-	}
-	if(frm.date.value=="") {
-		alert("날짜를 선택해주세요.");
-		frm.date.focus();
-		return false;
-	}
-	if(frm.place.value=="") {
-		alert("분실 또는 발견한 장소를 입력해주세요.");
-		frm.place.focus();
-		return false;
-	}
-	if(frm.type_item.value=="") {
-		alert("분실 또는 습득한 물건의 종류를 입력해주세요.");
-		frm.place.focus();
-		return false;
-	}
-	if(frm.contents.value=="") {
-		alert("내용을 입력해주세요.");
-		frm.contents.focus();
-		return false;
+	if((img = sessionStorage.getItem('file_path'))!=null){
+		frm.image.value=img;
+		alert('경로설정 성공');
+		sessionStorage.removeItem('file_path');
+		alert('temp 데이터 제거 성공');
 	}
 	
-	alert("제출하시겠습니까?");
-	return true;
+	if(confirm("제출하시겠습니까?")){
+		return true;
+	}else{
+		return false;
+	}
 }

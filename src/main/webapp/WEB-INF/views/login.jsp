@@ -26,7 +26,7 @@
         <h2 class="form-signin-heading">물건을 찾아줘</h2>
         <div id="warning"></div>
         <label for="inputEmail" class="sr-only">ID</label>
-        <input type="text" id="inputId" class="form-control" name="id" placeholder="ID" required autofocus>
+        <input type="text" id="inputId" class="form-control" name="id" placeholder="ID" required autofocus maxlength='15'>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPw" class="form-control" name="pw" placeholder="Password" required>
         <div class="checkbox">

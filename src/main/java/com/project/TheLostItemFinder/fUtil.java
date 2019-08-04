@@ -21,6 +21,30 @@ public class fUtil {
 		return date;
 	}
 	
+	public static String removeTag(String str, int limit){
+		int iter = -1, s = 0, e = 0;
+		boolean c = false;
+		String rst="";
+		
+		while(++iter<str.length()) {
+			if(str.charAt(iter)=='<') {
+				s = iter;
+				c = true;
+			}
+			else if(str.charAt(iter)=='>' && c) {
+				rst+=str.substring(e ,s);
+				e=iter + 1;
+				c=false;
+			}
+		}
+		rst += str.substring(e, iter);
+		if(rst.length()>limit) {
+			return rst.substring(0,limit);
+		}else {
+			return rst;
+		}
+	}
+	
 	public static String PathEncoding(String str) throws UnsupportedEncodingException {
 		byte[] bytes=str.getBytes();
 		CharBuffer cbuffer = CharBuffer.wrap((new String(bytes, "EUC-KR")).toCharArray());

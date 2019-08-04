@@ -60,6 +60,14 @@ public class ArticleDAOImpl implements ArticleDAO{
 		
 		return count/delimit + 1;
 	}
+	
+
+	public int adminTotalPage(int delimit, String officeName) {
+		
+		int count=sqlSession.selectOne(namespace+".selectPageByAdmin",officeName);
+		
+		return count/delimit + 1;
+	}
 
 	@Override
 	public List<ArticleDTO> selectList(int page, int delimit) throws Exception{
@@ -88,10 +96,10 @@ public class ArticleDAOImpl implements ArticleDAO{
 		return sqlSession.selectOne(namespace+".selectOne",param);
 	}
 	
-	public List<ArticleDTO> selectThumbnail(){
+	public List<ArticleDTO> selectThumbnail(int limit, int page){
 		HashMap<String,Object> param = new HashMap<String,Object>();
-		param.put("page", 0);
-		param.put("limit", 10);
+		param.put("page", page);
+		param.put("limit", limit);
 		return sqlSession.selectList(namespace+".selectAdminAll",param);
 	}
 	
@@ -121,5 +129,30 @@ public class ArticleDAOImpl implements ArticleDAO{
 		List<ArticleDTO> list=sqlSession.selectList(namespace+".todayCount");
 		System.out.println(list.size());
 		return list.size();
+	}
+
+	public boolean setDiscard(int seq, String adminName, String officeName) {
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		param.put("seq",seq);
+		param.put("admin",adminName);
+		param.put("office",officeName);
+		param.put("hold", 2);
+		if(sqlSession.update(namespace + ".setDiscard",param)!=1) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean cancelProperty(int seq) {
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		param.put("seq", seq);
+		if(sqlSession.update(namespace+".cancelProperty",param)!=1) {
+			return false;
+		}
+		return true;
+	}
+
+	public int getTotalMainPage() {
+		return sqlSession.selectOne(namespace+".getTotalMainPage");
 	}
 }

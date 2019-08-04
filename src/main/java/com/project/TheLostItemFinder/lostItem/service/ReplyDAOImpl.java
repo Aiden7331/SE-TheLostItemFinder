@@ -39,7 +39,7 @@ public class ReplyDAOImpl implements ReplyDAO{
 		HashMap<String,Integer> param = new HashMap<String,Integer>();
 		param.put("seq", seq);
 		param.put("article_seq",article_seq);
-		if(sqlSession.delete(namespace+".deleteReply",seq)!=1) {
+		if(sqlSession.delete(namespace+".deleteReply",param)!=1) {
 			return false;
 		}
 		

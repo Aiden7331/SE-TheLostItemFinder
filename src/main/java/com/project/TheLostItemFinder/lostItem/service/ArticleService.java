@@ -31,44 +31,52 @@ public class ArticleService {
 		return dao.totalPage(delimit);
 	}
 	
-	public List<ArticleDTO> getList(int page, int delimit) throws Exception {
+	public List<ArticleDTO> getList(Integer page, Integer delimit) throws Exception {
+		if(delimit==null) {
+			delimit = 10;
+		}
+		if(page==null) {
+			page = 1;
+		}
+		page--;
 		return dao.selectList(page, delimit);	
 	}
 	
-	public List<ArticleDTO> getList(int page, int delimit, String searchType, String search) throws Exception {
+	public List<ArticleDTO> getList(Integer page, Integer delimit, String searchType, String search) throws Exception {
+		if(delimit==null) {
+			delimit = 10;
+		}
+		if(page==null) {
+			page = 1;
+		}
+		
+		page--;
 		return dao.selectList(page, delimit,searchType, search);	
 		
 	}
 	
-	public List<ArticleDTO> getThumbnail(){
-		List<ArticleDTO> list = dao.selectThumbnail();
+	public List<ArticleDTO> getThumbnail(int limit, int page, int textLimit){
+		page = (page - 1) * limit;
+		List<ArticleDTO> list = dao.selectThumbnail(limit, page);
 		ArticleDTO dto;
 		for(int i=0; i<list.size(); i++) {
 			dto=list.get(i);
-			String contents=dto.getCONTENTS();
-			if(contents.contains("<br>")) {
-				contents=contents.replaceAll("<br>", " ");
-				contents=contents.trim();
-			}
-			if(contents.contains("<p>")) {
-				contents=contents.replaceAll("<p>", " ");
-				contents=contents.trim();
-			}
-			if(contents.contains("</p>")) {
-				contents=contents.replaceAll("</p>", " ");
-				contents=contents.trim();
-			}
-			if(contents.length()>20) {
-				contents=contents.substring(0, 20);
-			}
-			dto.setCONTENTS(contents);
-			System.out.println(contents);
+			
+			dto.setCONTENTS(fUtil.removeTag(dto.getCONTENTS(),textLimit));
+			System.out.println(dto.getCONTENTS());
 			list.set(i, dto);
 		}
 		return list;
 	}
 	
-	public List<ArticleDTO> getAdminList(int page, int delimit, String office)throws Exception {
+	public List<ArticleDTO> getAdminList(Integer page, Integer delimit, String office)throws Exception {
+		if(delimit==null) {
+			delimit=10;
+		}
+		if(page==null) {
+			page = 1;
+		}
+		page--;
 		return dao.selectAdminList(page, delimit, office);
 	}
 	
@@ -85,7 +93,7 @@ public class ArticleService {
 		
 		return rdao.insertReply(dto);
 	}
-	public boolean addArticle(String title, String type_item, String type_article, String contents, String place, String nickName, String date_lost) {
+	public boolean addArticle(String title, String type_item, String type_article, String contents, String place, String nickName, String date_lost, String image) {
 		ArticleDTO dto=new ArticleDTO();
 		
 		dto.setDATE_UPLOAD(fUtil.date());
@@ -96,6 +104,7 @@ public class ArticleService {
 		dto.setPLACE(place);
 		dto.setNICKNAME(nickName);
 		dto.setDATE_LOST(date_lost);
+		dto.setIMAGE(image);
 		dao.insertItem(dto);
 		
 		return true;
@@ -108,12 +117,29 @@ public class ArticleService {
 	public boolean deleteReply(int seq,int article_seq) {
 		return rdao.deleteReply(seq, article_seq);
 	}
-	
+	/*
+	 * 기능: 관리자 메뉴에서 물건을 찾아줄때 사용
+	 * 
+	 */
 	public boolean setGiven(String name, String memo, String tel, int seq) {
 		return dao.setGiven(name, memo, tel, seq);
 	}
 	
 	public int todayCount() {
 		return dao.todayCount();
+	}
+	/*
+	 * 기능: 관리자 메뉴에서 물건을 폐기할때 사용
+	 * 
+	 */
+	public boolean setDiscard(int seq, String adminName, String officeName) {
+		return dao.setDiscard(seq, adminName, officeName);
+	}
+	
+	public boolean cancelProperty(int seq) {
+		return dao.cancelProperty(seq);
+	}
+	public int getTotalMainPage(int limit) {
+		return dao.getTotalMainPage()/limit + 1;
 	}
 }

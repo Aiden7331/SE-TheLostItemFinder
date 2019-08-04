@@ -16,7 +16,14 @@
     <title>물건을 찾아줘</title>
 	<jsp:include page="/WEB-INF/views/default.jsp" flush="false"/>	
 	<script src="/TheLostItemFinder/js/board.js"></script>
-	
+	<script>
+	$(function () {
+	    $('[data-toggle="popover"]').popover()
+	    })
+	$(function () {
+	    $('[data-toggle="dropdown"]').dropdown()
+	    })    
+	</script>
   </head>
 
   <body>
@@ -37,34 +44,43 @@
             </div>
 			<c:if test="${isArticle eq true}">
 			<div>
-			 <table class="table table-hover text-center">
+			<c:choose>
+            	<c:when test="${article.HOLD eq 'GIVEBACK'}">
+			 		<table class="table given-item text-center">
+				</c:when>
+				<c:when test="${article.HOLD ne 'GIVEBACK'}">
+			 		<table class="table text-center">
+				</c:when>
+			</c:choose>
 			  <tr>
-			    <th colspan="4" style="text-align:center;">[${article.TYPE_ARTICLE}]<font id="title">${article.TITLE}</font></th>
+			    <th colspan="4" class="header-style" style="text-align:center;">[${article.TYPE_ARTICLE}]<font id="title">${article.TITLE}</font></th>
 			  </tr>
 			  <tr>
-				<td colspan="3" style="text-align:left;">${article.NICKNAME} <font id="date">${article.DATE_UPLOAD} 작성</font> </td><td style="text-align:right;">조회수 ${article.HITS }</td>
+				<td colspan="2" style="text-align:center;">${article.NICKNAME}</td><td colspan="1" style="text-align:center;"> <font id="date">${article.DATE_UPLOAD} 작성</font> </td><td style="text-align:right;">조회수 ${article.HITS }</td>
 			  </tr>
 			  <tr>
 				<td style="text-align:center; width:15%">잃어버린 장소 </td><td style="text-align:left;"> ${article.PLACE} </td>
 				<td style="text-align:center; width:15%">잃어버린 / 찾은 날 </td><td style="text-align:left;"> ${article.DATE_LOST} </td>
 			  </tr>
 			  <tr>
-			  	<c:if test="${article.OFFICE_SEQ eq null}">
+			  	<c:if test="${article.HOLD eq 'NONE'}">
 				<td style="text-align:center; width:15%">분실물 종류</td><td colspan="3" style="text-align:left; width:50%">${article.TYPE_ITEM}</td>
 				</c:if>
-			  	<c:if test="${article.OFFICE_SEQ ne null}">
+			  	<c:if test="${article.HOLD ne 'NONE'}">
 				<td style="text-align:center; width:15%">분실물 종류</td><td style="text-align:left; width:35%">${article.TYPE_ITEM}</td>
-				<td style="text-align:center; width:15%">보관중인 관리실</td><td style="text-align:left; width:35%">${article.OFFICE}</td>
+				<td style="text-align:center; width:15%">보관중인 관리실</td><td style="text-align:left; width:35%">${article.OFFICE}
+				<button id="infoOffice" class="glyphicon glyphicon-info-sign" style="border:none; backgorund-color:#FFFFFF;" data-toggle="popover" data-placement="right" title="${infoOffice.NAME}" data-html="true" data-content="관리실 번호 - ${infoOffice.TEL} <br> 위치 - ${infoOffice.LOCATION}"></button></td>
 				</c:if>
 			  </tr>
 			  <tr>
-				<td colspan="4" style="text-align:left; height:200px" >${article.CONTENTS}</td>
+				<td colspan="4" style="text-align:left; height:200px" >
+				${article.CONTENTS}</td>
 			  </tr>
 			 </table>
 			</div>
 			<div>
-			 <table class="table table-hover text-center">
-			  <tr style="width:100%">
+			 <table class="table text-center">
+			  <tr class="header-style" style="width:100%">
 			   <th style="text-align:center; width:8%;">댓글번호</th><th style="text-align:center; width:65%">내용</th><th style="text-align:center; width:10%">작성자</th><th style="text-align:center; width:17%">작성일</th>
 			  </tr>
 			  <c:choose>
@@ -90,7 +106,7 @@
 			  	</tr>
 			   </c:when>
 			  </c:choose>
-			  <tr>
+			  <tr class="table-hover">
 			   <c:choose>
                 <c:when test="${not empty sessionScope.user}">
                  <form action="board" method="POST">
@@ -115,7 +131,12 @@
 			<div>
 			 <c:choose>
 			  <c:when test="${sessionScope.user.GRADE eq 'ADMIN'}" >
-			   <button class="btn btn-default" onclick="store(${article.SEQ})">보관하기</button> <button class="btn btn-default" onclick="">보관취소</button>
+			  <c:if test="${article.HOLD eq 'NONE'}">
+			   <button class="btn btn-default" onclick="store(${article.SEQ})">보관하기</button>
+			  </c:if>
+			  <c:if test="${article.HOLD eq 'HOLD' and article.OFFICE_SEQ eq sessionScope.user.OFFICE_SEQ}"> 
+			   <button class="btn btn-default" onclick="cancel(${article.SEQ})">보관취소</button>
+			  </c:if>
 			   <button class="btn btn-warning" onclick="free(${article.SEQ})">삭제</button>
 			  </c:when>
 			  <c:when test="${empty sessionScope.user or article.NICKNAME ne sessionScope.user.NICKNAME}">
@@ -135,35 +156,35 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   보기 <span class="caret"></span>
                 </button>
-                <input type="hidden" id="limit" name="limit" value="10">
+                <input type="hidden" id="limit" name="limit" value="${limit}">
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#">최신순</a></li>
-                  <li><a href="#">추가예정</a></li>
-                  <li><a href="#">추가예정</a></li>
+                  <li><a href="#">주인찾는글만 보기</a></li>
+                  <li><a href="#">물건찾는글만 보기</a></li>
                   <li class="divider"></li>
-                  <li><a href="#" onclick="divide(5)">5개씩 보기</a></li>
-                  <li><a href="#" onclick="divide(10)">10개씩 보기</a></li>
-                  <li><a href="#" onclick="divide(15)">15개씩 보기</a></li>
+                  <li><a onclick="divide(5)">5개씩 보기</a></li>
+                  <li><a onclick="divide(10)">10개씩 보기</a></li>
+                  <li><a onclick="divide(15)">15개씩 보기</a></li>
                 </ul>
               </div>
             </div>
             <p></p>
             <table class="table table-hover text-center">
-              <tr class="info">
-                <th style="width:7%; text-align:center;"><b>글 번호</b></th>
-                <th style="width:21%; text-align:center;"><b>물건 사진</b></th>
-                <th style="width:30%; text-align:center;"><b>제목</b></th>
-                <th style="width:15%; text-align:center;"><b>물건 종류</b></th>
-                <th style="width:10%; text-align:center;"><b>글쓴이</b></th>
-                <th style="width:7%; text-align:center;"><b>조회수</b></th>
-                <th style="width:10%; text-align:center;"><b>업로드 날짜</b></th>
+              <tr class="header-style">
+                <th style="width:7%; text-align:center; color:#FFFFFF;"><b>글 번호</b></th>
+                <th style="width:21%; text-align:center; color:#FFFFFF;"><b>물건 사진</b></th>
+                <th style="width:30%; text-align:center; color:#FFFFFF;"><b>제목</b></th>
+                <th style="width:15%; text-align:center; color:#FFFFFF;"><b>물건 종류</b></th>
+                <th style="width:10%; text-align:center; color:#FFFFFF;"><b>글쓴이</b></th>
+                <th style="width:7%; text-align:center; color:#FFFFFF;"><b>조회수</b></th>
+                <th style="width:10%; text-align:center; color:#FFFFFF;"><b>업로드 날짜</b></th>
               </tr>
               <c:forEach var="article" items="${list}">
               <tr>
                 <td style="text-align:center">${article.SEQ}</td>
-                <td><img src="/TheLostItemFinder/site-image/main_image.png" alt="클릭하면 게시물로 이동합니다." width="40%"></td>
+                <td><img src="${article.IMAGE}" alt="클릭하면 게시물로 이동합니다." width="40%"></td>
                 <td><a href="?id=${article.SEQ}">[${article.TYPE_ARTICLE}]${article.TITLE}</a>
-                <c:if test="${article.HOLD eq 1}">
+                <c:if test="${article.HOLD eq 'GIVEBACK'}">
                 	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                 </c:if></td>
                 <td>${article.TYPE_ITEM}</td>
@@ -202,7 +223,7 @@
               </ul>
             </div>
             <div class="btn-group">
-              <input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요.">
+              <input type="text" id="searchField" class="form-control" name="search" placeholder="검색어를 입력하세요.">
               <input type="hidden" id="searchType" name="searchType" value="Title">
             </div>
             <button type="submit" class="btn btn-default">검색</button>

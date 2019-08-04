@@ -64,18 +64,32 @@
 			<form method="POST" action="upload" onsubmit="return checkValidate(this)" name="inputgroup">
 	          <table class="table">
 	          	<tr>
-	            	<td><input class="form-control inputtext" type="text" name="title" placeholder="제목을 입력하세요"></td>
+	            	<td><input class="form-control inputtext" type="text" name="title" autocomplete="off" placeholder="제목을 입력하세요"></td>
 	            </tr>
 	            <tr>
-	            	<td><input class="form-control inputtext" type="text" id="datepicker" name="date_lost" placeholder="잃어버린 날짜를 선택하세요."></td>
+	            	<td><input class="form-control inputtext" type="text" id="datepicker" name="date_lost" autocomplete="off" placeholder="잃어버린 날짜를 선택하세요."></td>
 	            </tr>
 	            <tr>
 	            	<td><input class="form-control inputtext" type="text" name="place" placeholder="잃어버린 장소를 입력하세요"></td>
 	            </tr>
 	            <tr>
 	            	<td>
-	            		<input class="form-control" style="width:50%" type="text" name="type_item" placeholder="분실물 종류를 입력하세요">
-	            		
+	            		분실물 종류
+	            		<select onchange="selectType(this)">
+	            			<option value="직접입력">직접입력</option>
+	            			<option value="스마트폰">스마트폰</option>
+	            			<option value="지갑">지갑</option>
+	            			<option value="카드">카드</option>
+	            			<option value="열쇠">열쇠</option>
+	            			<option value="USB">USB</option>
+	            			<option value="충전기">충전기</option>
+	            			<option value="겉옷">겉옷</option>
+	            			<option value="택배">택배</option>
+	            			<option value="이어폰">이어폰</option>
+	            			<option value="노트북">노트북</option>
+	            			<option value="기타">기타</option>
+	            		</select>
+	            		<div id="inputForm"></div>
 	            	</td>
 	            </tr>
 	            <tr>
@@ -86,9 +100,11 @@
 	            		</select>
 	            	</td>
 	            </tr>
+	            <!-- 미사용 
 	            <tr>
 	            	<td>이미지 첨부하기 <input type="file" class="btn btn-default" id="image" name="fileData"></td>
 	            </tr>
+	            -->
 				<tr>
 					<td><textarea name="contents" id="editor" rows="10" cols="80" placeholder="내용을 입력하세요"> </textarea></td>
 					
@@ -100,6 +116,7 @@
 	          <!-- Single button -->
 	          <div style="text-align:right;">
 			   <input type="hidden" name="nickname" value="${sessionScope.user.NICKNAME}">
+			   <input type="hidden" id="image" name="image" value="/TheLostItemFinder/site-image/main_image.png">
 			   <input type="submit" class="btn btn-primary" value="작성완료"/>
 			</form>
 

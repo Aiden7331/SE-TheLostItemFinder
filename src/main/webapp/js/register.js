@@ -51,6 +51,16 @@ var nickcheck=false;
 	  }
   }
   
+  function checkAlphaNum(param){
+	  var str = param.value;
+	  var i = str.length - 1;
+	  if((str[i]>='0' && str[i]<='9') || (str[i]>='a' && str[i]<='z')){
+		  return ;
+	  }
+	  param.value=str.substring(0,i);
+	  param.focus();
+  }
+  
   function sending(form){
 	  if(idcheck==false){
 		  alert("아이디 중복확인을 해주세요");

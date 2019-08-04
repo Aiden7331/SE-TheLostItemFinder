@@ -7,6 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.navbar-inverse{
+		background-color:#337ab7;
+		border-color:#2e6da4;
+		color:#FFFFFF;
+	}
+</style>
 </head>
 <body>
       <!-- Static navbar -->
@@ -23,7 +30,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="board">들어온 분실물 </a></li>
+              <li><a href="board">분실물 알림</a></li>
               <c:if test="${sessionScope.user.GRADE eq 'ADMIN'}">
                <li><a href="items">${sessionScope.office}관리실</a></li>
               </c:if>

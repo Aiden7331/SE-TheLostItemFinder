@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="Office"> 
+	<select id="selectOneOffice" parameterType="HashMap" resultType="com.project.TheLostItemFinder.lostItem.service.OfficeDTO">
+		SELECT
+		SEQ,
+		NAME,
+		TEL,
+		LOCATION
+		FROM TB_OFFICE
+		WHERE SEQ = #{seq}
+	</select>
+	
+	<update id="updateOffice" parameterType="HashMap">
+		UPDATE
+		TB_OFFICE
+		SET
+		TEL = #{dto.TEL},
+		LOCATION = #{dto.LOCATION}
+		WHERE NAME = #{dto.NAME}
+	</update>
+</mapper>

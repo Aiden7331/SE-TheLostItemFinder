@@ -11,13 +11,12 @@
 	.navbar-inverse{
 		background-color:#337ab7;
 		border-color:#2e6da4;
-		color:#FFFFFF;
 	}
 </style>
 </head>
 <body>
       <!-- Static navbar -->
-      <nav class="navbar navbar-inverse">
+      <nav class="navbar navbar-inverse" id="top-header">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -26,13 +25,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/TheLostItemFinder/">물건을 찾아줘</a>
+            <a class="navbar-brand" style="color:#FFFFFF;" href="/TheLostItemFinder/">물건을 찾아줘</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="board">분실물 알림</a></li>
+              <li><a href="board" style="color:#FFFFFF;">분실물 알림</a></li>
               <c:if test="${sessionScope.user.GRADE eq 'ADMIN'}">
-               <li><a href="items">${sessionScope.office}관리실</a></li>
+               <li><a href="items" style="color:#FFFFFF;">${sessionScope.office}관리실</a></li>
               </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">

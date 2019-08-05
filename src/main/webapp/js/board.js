@@ -100,14 +100,17 @@ function setCondition(type){
 }
 
 function delRep(seq,aseq){
+	var url=window.location.href;
+	
 	if(confirm("정말로 댓글을 삭제하시겠습니까?")){
 		$.ajax({
 			type:'GET',
 			url:ctx+'/deletereply',
 			data:"seq="+seq+"&aseq="+aseq,
+			contentType:"application/json; charset=UTF-8",
 			success:function(data){
 				alert('댓글이 삭제되었습니다.');
-				location.reload();
+				location.href=url;
 			},error:function(request,status,error){
 				alert("다시 시도하세요 (error Name = "+status+", code="+ error +", message = "+request.responseText);
 				location.href=ctx+"/board";

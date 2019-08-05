@@ -91,7 +91,7 @@ public class OfficeController {
 	}
 	
 	@RequestMapping(value="setDiscard", method=RequestMethod.POST)
-	public void disCardItem(Model model,@RequestBody String user,
+	public void discardItem(Model model,@RequestBody String user,
 			@RequestBody String office, @RequestBody String seq,
 			HttpServletResponse response) throws IOException {
 		

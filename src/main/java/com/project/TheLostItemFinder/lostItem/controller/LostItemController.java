@@ -242,22 +242,23 @@ public class LostItemController {
 	 * 
 	 */
 	@RequestMapping(value="deletereply", method=RequestMethod.GET)
-	public String deleteReply(Model model,@RequestParam(value="seq") int seq, @RequestParam(value="aseq") int article_seq, HttpServletRequest request) {
+	public void deleteReply(Model model, @RequestParam(value="seq") String seq, @RequestParam(value="aseq") String aseq, HttpServletRequest request
+			,HttpServletResponse response){
 		HttpSession session=request.getSession();
 		if(session.isNew()){
 			//TODO :: JSON 실패 응답
 		}
 		
 		MemberDTO mdto = (MemberDTO)session.getAttribute("user");
-		ReplyDTO rdto = serv.getAReply(seq,article_seq);
-		System.out.println("deletereply:"+mdto.getNICKNAME()+", "+rdto.getNICKNAME());
+		ReplyDTO rdto = serv.getAReply(Integer.parseInt(seq), Integer.parseInt(aseq));
 		if(mdto.getNICKNAME().equals(rdto.getNICKNAME())) {
 			System.out.println("deletereply: execution deleteReply at serv object");
-			serv.deleteReply(seq,article_seq);
+			serv.deleteReply(Integer.parseInt(seq), Integer.parseInt(aseq));
+			//response.getWriter().write("{'message':'true'}");
 		}
 		
 		
-		return "board";
+		return ;
 	}
 	
 	@RequestMapping(value="additem", method=RequestMethod.GET)
@@ -283,4 +284,9 @@ public class LostItemController {
 	}
 	
 	
+}
+
+class JSONreply{
+	int seq;
+	int aseq;
 }
